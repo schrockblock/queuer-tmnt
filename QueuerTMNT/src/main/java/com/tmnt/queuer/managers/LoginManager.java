@@ -1,6 +1,6 @@
 package com.tmnt.queuer.managers;
 
-import com.demo.queuer.Interfaces.LoginManagerCallback;
+import com.tmnt.queuer.Interfaces.LoginManagerCallback;
 
 /**
  * Created by TMNT on 1/7/14.

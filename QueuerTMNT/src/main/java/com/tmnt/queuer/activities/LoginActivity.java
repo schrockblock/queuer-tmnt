@@ -1,9 +1,8 @@
 package com.tmnt.queuer.activities;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.demo.queuer.R;
-import com.demo.queuer.managers.LoginManager;
-import com.demo.queuer.Interfaces.LoginManagerCallback;
+import com.tmnt.queuer.Interfaces.LoginManagerCallback;
+import com.tmnt.queuer.R;
+import com.tmnt.queuer.managers.LoginManager;
 
 public class LoginActivity extends ActionBarActivity implements LoginManagerCallback{
 
@@ -59,6 +58,16 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void startedRequest() {
+
+    }
+
+    @Override
+    public void finishedRequest(boolean successful) {
+
     }
 
     /**
