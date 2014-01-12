@@ -20,6 +20,11 @@
         </activity>
 
         <activity
+            android:name=".activities.CreateAccountActivity"
+            android:label="CreateAccountActivity">
+        </activity>
+
+        <activity
             android:name="com.tmnt.queuer.activities.LoginLoad"
             android:label="@string/title_activity_login_load"
             android:parentActivityName=".activities.LoginActivity">
