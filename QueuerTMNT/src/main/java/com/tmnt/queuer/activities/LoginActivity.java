@@ -1,8 +1,10 @@
 package com.tmnt.queuer.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,22 +25,29 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
         setContentView(R.layout.activity_login);
 
         Button login = (Button)findViewById(R.id.btn_login);
-        final EditText user = (EditText)findViewById(R.id.et_username);
-        final EditText pass = (EditText)findViewById(R.id.et_password);
+        Button createAccount = (Button)findViewById(R.id.btn_createAccount);
+        final EditText EXTRA_user = (EditText)findViewById(R.id.et_username);
+        final EditText EXTRA_pass = (EditText)findViewById(R.id.et_password);
+        EXTRA_pass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, LoginLoad.class);
+                intent.putExtra(EXTRA_user, pass);
                 LoginManager manager = new LoginManager();
                 //manager.setCallback(LoginActivity.this);
                 try {
-                    manager.login(user.getText().toString(), pass.getText().toString());
+                    manager.login(EXTRA_user.getText().toString(), EXTRA_pass.getText().toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        });
-    }
 
+            startActivity(intent);
+            }
+
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
