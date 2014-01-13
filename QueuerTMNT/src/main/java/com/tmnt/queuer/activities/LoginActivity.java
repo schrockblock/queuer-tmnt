@@ -46,6 +46,16 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
 
         });
 
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+
+                startActivity(intent);
+            }
+
+        });
+
     }
 
     @Override
