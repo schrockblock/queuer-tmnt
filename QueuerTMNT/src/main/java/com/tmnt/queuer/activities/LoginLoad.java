@@ -1,7 +1,6 @@
 package com.tmnt.queuer.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 import com.tmnt.queuer.R;
 
 public class LoginLoad extends ActionBarActivity {
