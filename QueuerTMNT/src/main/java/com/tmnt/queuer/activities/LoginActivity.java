@@ -26,36 +26,22 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
 
         Button login = (Button)findViewById(R.id.btn_login);
         Button createAccount = (Button)findViewById(R.id.btn_createAccount);
-        final EditText EXTRA_user = (EditText)findViewById(R.id.et_username);
-        final EditText EXTRA_pass = (EditText)findViewById(R.id.et_password);
-        EXTRA_pass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
+        final EditText user = (EditText)findViewById(R.id.et_username);
+        final EditText pass = (EditText)findViewById(R.id.et_password);
+        pass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, LoginLoad.class);
-                //intent.putExtra(EXTRA_user, Extra_pass);
                 LoginManager manager = new LoginManager();
                 //manager.setCallback(LoginActivity.this);
                 try {
-                    manager.login(EXTRA_user.getText().toString(), EXTRA_pass.getText().toString());
+                    manager.login(user.getText().toString(), pass.getText().toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             startActivity(intent);
-            }
-
-        });
-
-        createAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
-                LoginManager manager = new LoginManager();
-                //manager.setCallback(LoginActivity.this);
-
-                startActivity(intent);
             }
 
         });
