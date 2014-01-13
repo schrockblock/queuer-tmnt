@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.TextView;
+import com.tmnt.queuer.R;
 
 public class LoginLoad extends ActionBarActivity {
 

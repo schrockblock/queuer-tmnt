@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    tools:context="com.tmnt.queuer.activities.LoginLoad"
+    tools:context="com.tmnt.queuer.activities.LoginLoad$PlaceholderFragment"
     tools:ignore="MergeRootFrame"
     android:orientation="vertical"
     android:layout_width="match_parent"
