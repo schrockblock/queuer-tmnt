@@ -5,6 +5,17 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login_button">Login</string>
+    <string name="login_user_text">username or email</string>
     <string name="create_account_button">Create Account</string>
+    <string name="error">Error</string>
+    <string name="login_pass_text">Password</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="title_activity_login_load">Login Load</string>
+    <string name="title_activity_login_activity">Login Activity</string>
 
+
+    <string name="undo">Undo</string>
+    <string name="undo_all">Undo All</string>
+    <string name="item_deleted">Item deleted</string>
+    <string name="n_items_deleted">%1$s items deleted</string>
 </resources>
