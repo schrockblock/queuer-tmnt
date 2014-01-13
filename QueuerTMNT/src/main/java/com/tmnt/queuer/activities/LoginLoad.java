@@ -21,7 +21,7 @@ public class LoginLoad extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(findViewById(R.layout.activity_login_load));
+        setContentView(R.layout.activity_login_load);
 
         //Make sure we're are running on Honeycomb or higher to use Actionbar APIs
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -34,17 +34,7 @@ public class LoginLoad extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-        //Get the username from LoginActivity
-        Intent intent = getIntent();
-        String username = intent.getStringExtra(LoginActivity.user);
 
-        //Create the text view
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText(pass);
-
-        //Set the text view as the activity layout
-        setContentView(textView);
     }
 
 
