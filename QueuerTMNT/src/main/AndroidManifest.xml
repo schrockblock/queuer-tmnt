@@ -15,8 +15,15 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.tmnt.queuer.activities.LoginActivity"
             android:label="LoginActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="com.tmnt.queuer.activities.LoginActivity"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
 
         <activity
@@ -29,6 +36,8 @@
             android:label="@string/title_activity_login_load"
             android:parentActivityName=".activities.LoginActivity">
         </activity>
+
+
 
 
     </application>
