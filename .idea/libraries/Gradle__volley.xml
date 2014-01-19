@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: volley">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/QueuerTMNT/src/main/res/libs/volley.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
