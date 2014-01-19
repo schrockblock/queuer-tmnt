@@ -19,9 +19,7 @@ package com.tmnt.queuer.activities;
 
     import java.util.ArrayList;
 
-    /**
-     * Created by eschrock on 1/15/14.
-     */
+
     public class FeedActivity extends ActionBarActivity {
         private FeedAdapter adapter;
 
@@ -66,4 +64,4 @@ package com.tmnt.queuer.activities;
             listView.enableRearranging();
         }
     }
-}
+
