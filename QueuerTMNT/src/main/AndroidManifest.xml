@@ -24,6 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-sdk android:minSdkVersion="3" />
     </application>
+
 
 </manifest>

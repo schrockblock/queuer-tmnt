@@ -53,7 +53,7 @@ import com.nineoldandroids.animation.TypeEvaluator;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
-import com.tmnt.queuer.Interfaces.RearrangementListener;
+import com.tmnt.queuer.interfaces.RearrangementListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -409,6 +409,7 @@ public class EnhancedListView extends ListView {
         // Initialize undo popup
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View undoView = inflater.inflate(R.layout.undo_popup, null);
+        assert undoView != null;
         mUndoButton = (Button)undoView.findViewById(R.id.undo);
         mUndoButton.setOnClickListener(new UndoClickListener());
         mUndoButton.setOnTouchListener(new OnTouchListener() {
@@ -451,6 +452,7 @@ public class EnhancedListView extends ListView {
                     View selectedView = getChildAt(itemNum);
                     mMobileItemId = getAdapter().getItemId(position);
                     mHoverCell = getAndAddHoverView(selectedView);
+                    assert selectedView != null;
                     selectedView.setVisibility(INVISIBLE);
 
                     mCellIsMobile = true;
@@ -573,6 +575,7 @@ public class EnhancedListView extends ListView {
      * offset the cell being swapped to where it previously was and then animate it to
      * its new position.
      */
+
     private void handleCellSwitch() {
         final int deltaY = mLastEventY - mDownY;
         int deltaYTotal = mHoverCellOriginalBounds.top + mTotalOffset + deltaY;
@@ -610,27 +613,31 @@ public class EnhancedListView extends ListView {
             updateNeighborViewsForID(mMobileItemId);
 
             final ViewTreeObserver observer = getViewTreeObserver();
-            observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                public boolean onPreDraw() {
-                    observer.removeOnPreDrawListener(this);
+            if (observer != null) {
+                observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                    public boolean onPreDraw() {
+                        observer.removeOnPreDrawListener(this);
 
-                    View switchView = getViewForID(switchItemID);
+                        View switchView = getViewForID(switchItemID);
 
-                    mTotalOffset += deltaY;
+                        mTotalOffset += deltaY;
 
-                    int switchViewNewTop = switchView.getTop();
-                    int delta = switchViewStartTop - switchViewNewTop;
+                        int switchViewNewTop = switchView.getTop();
+                        int delta = switchViewStartTop - switchViewNewTop;
 
-                    ViewHelper.setTranslationY(switchView, delta);
+                        ViewHelper.setTranslationY(switchView, delta);
 
-                    ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(switchView,
-                            PropertyValuesHolder.ofFloat("translationY", 0));
-                    animator.setDuration(MOVE_DURATION);
-                    animator.start();
+                        ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(switchView,
+                                PropertyValuesHolder.ofFloat("translationY", 0));
+                        System.out.println("STRING MOVEDUR:" + MOVE_DURATION);
+                        System.out.println("STRING ANIMATOR:" + animator);
+                        animator.setDuration(MOVE_DURATION);
+                        animator.start();
 
-                    return true;
-                }
-            });
+                        return true;
+                    }
+                });
+            }
         }
     }
 
@@ -1029,6 +1036,7 @@ public class EnhancedListView extends ListView {
         View childView = getChildAt(position - getFirstVisiblePosition());
         View view = null;
         if(mSwipingLayout > 0) {
+            assert childView != null;
             view = childView.findViewById(mSwipingLayout);
         }
         if(view == null) {
@@ -1135,6 +1143,7 @@ public class EnhancedListView extends ListView {
                     mDownPosition = getPositionForView(mSwipeDownView) - getHeaderViewsCount();
 
                     mVelocityTracker = VelocityTracker.obtain();
+                    assert mVelocityTracker != null;
                     mVelocityTracker.addMovement(ev);
                 }
                 super.onTouchEvent(ev);
@@ -1195,6 +1204,7 @@ public class EnhancedListView extends ListView {
 
                             // Cancel ListView's touch (un-highlighting the item)
                             MotionEvent cancelEvent = MotionEvent.obtain(ev);
+                            assert cancelEvent != null;
                             cancelEvent.setAction(MotionEvent.ACTION_CANCEL
                                     | (ev.getActionIndex()
                                     << MotionEvent.ACTION_POINTER_INDEX_SHIFT));
@@ -1266,6 +1276,7 @@ public class EnhancedListView extends ListView {
     private void performDismiss(final View dismissView, final View listItemView, final int dismissPosition) {
 
         final ViewGroup.LayoutParams lp = listItemView.getLayoutParams();
+        assert lp != null;
         final int originalLayoutHeight = lp.height;
 
         int originalHeight = listItemView.getHeight();
@@ -1323,6 +1334,7 @@ public class EnhancedListView extends ListView {
                         ViewHelper.setAlpha(pendingDismiss.view, 1f);
                         ViewHelper.setTranslationX(pendingDismiss.view, 0);
                         lp = pendingDismiss.childView.getLayoutParams();
+                        assert lp != null;
                         lp.height = originalLayoutHeight;
                         pendingDismiss.childView.setLayoutParams(lp);
                     }
