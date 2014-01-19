@@ -1,47 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tmnt.queuer"
-    android:versionCode="1"
-    android:versionName="1.0" >
-
-    <uses-sdk
-        android:minSdkVersion="10"
-        android:targetSdkVersion="19" />
+    package="com.tmnt.queuer" >
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon_tmnt"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <activity
             android:name="com.tmnt.queuer.activities.LoginActivity"
-            android:label="LoginActivity">
-
+            android:label="LoginActivity" >
+        </activity>
+        <activity
+            android:name=".activities.ProjectActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".activities.FeedActivity"
+            android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="com.tmnt.queuer.activities.LoginActivity"/>
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        <activity
-            android:name=".activities.CreateAccountActivity"
-            android:label="CreateAccountActivity">
-        </activity>
-
-        <activity
-            android:name="com.tmnt.queuer.activities.LoginLoad"
-            android:label="@string/title_activity_login_load"
-            android:parentActivityName=".activities.LoginActivity">
-        </activity>
-
-
-
-
     </application>
-
-
 
 </manifest>

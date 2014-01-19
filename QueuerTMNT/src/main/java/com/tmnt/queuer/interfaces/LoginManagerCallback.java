@@ -1,4 +1,4 @@
-package com.tmnt.queuer.Interfaces;
+package com.tmnt.queuer.interfaces;
 
 /**
  * Created by rahul on 1/8/14.

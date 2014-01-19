@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.tmnt.queuer.Interfaces.LoginManagerCallback;
+import com.tmnt.queuer.interfaces.LoginManagerCallback;
 import com.tmnt.queuer.R;
 import com.tmnt.queuer.managers.LoginManager;
 
