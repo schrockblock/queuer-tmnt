@@ -1,6 +1,7 @@
 package com.tmnt.queuer.managers;
 
 import android.support.v7.appcompat.R;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -43,12 +44,14 @@ public class LoginManager {
                 @Override
                 public void onResponse(JSONObject response) {
                     // handle response (are there errors?)
-                    if (response.)
+                    Log.d("TESTINGRESPONSE", response.toString().toUpperCase());
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     // deal with it
+
+                    Log.d("TESTINGRESPONSE", error.toString().toUpperCase());
 
                 }
             });
