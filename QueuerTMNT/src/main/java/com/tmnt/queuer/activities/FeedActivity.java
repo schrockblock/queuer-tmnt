@@ -63,5 +63,6 @@ package com.tmnt.queuer.activities;
             listView.enableSwipeToDismiss();
             listView.enableRearranging();
         }
+
     }
 

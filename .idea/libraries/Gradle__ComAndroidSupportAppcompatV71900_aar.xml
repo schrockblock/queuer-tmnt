@@ -2,6 +2,7 @@
   <library name="Gradle: ComAndroidSupportAppcompatV71900.aar">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/QueuerTMNT/build/exploded-bundles/ComAndroidSupportAppcompatV71900.aar/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/QueuerTMNT/build/exploded-bundles/ComAndroidSupportAppcompatV71900.aar/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
