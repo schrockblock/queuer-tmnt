@@ -27,9 +27,24 @@ import java.util.ArrayList;
             setContentView(R.layout.activity_feed);
 
             ArrayList<Project> projects = new ArrayList<Project>(20);
-            /**for (int i = 0; i < 20; i++){
+            for (int i = 0; i < 20; i++){
                 projects.add(new Project(i, "Project " + i));
-            }*/
+            }
+
+            Intent previousIntent = getIntent();
+            String Project_Id = previousIntent.getStringExtra("Project_Id");
+
+            if (Project_Id != null) {
+                for(Project proj : projects){
+                    if (Project_Id.equals("" + proj.getId())){
+                        projects.remove(proj);
+                        break;
+                    }
+                }
+
+            }
+
+
             TextView no_projects = (TextView)findViewById(R.id.lv_no_project);
             no_projects.setVisibility(View.INVISIBLE);
 
@@ -40,6 +55,11 @@ import java.util.ArrayList;
             EnhancedListView listView = (EnhancedListView)findViewById(R.id.lv_projects);
             adapter = new FeedAdapter(this, projects);
             listView.setAdapter(adapter);
+
+
+
+            listView.getViewForID(213).setVisibility(View.GONE);
+
 
             listView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
                 @Override
