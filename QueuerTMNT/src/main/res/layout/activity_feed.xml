@@ -4,9 +4,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_projects"
+        android:id="@+id/lv_no_project"
+        android:layout_gravity="center_horizontal" />
+
     <com.tmnt.queuer.views.EnhancedListView
         android:id="@+id/lv_projects"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
+
 
 </LinearLayout>

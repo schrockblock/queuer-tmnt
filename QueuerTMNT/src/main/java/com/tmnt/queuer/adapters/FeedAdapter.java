@@ -6,19 +6,17 @@ package com.tmnt.queuer.adapters;
 
 
         import android.content.Context;
-        import android.database.DataSetObserver;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.BaseAdapter;
-        import android.widget.ListAdapter;
-        import android.widget.TextView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 
-        import com.tmnt.queuer.interfaces.RearrangementListener;
-        import com.tmnt.queuer.models.Project;
-        import com.tmnt.queuer.R;
+import com.tmnt.queuer.R;
+import com.tmnt.queuer.interfaces.RearrangementListener;
+import com.tmnt.queuer.models.Project;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 
 public class FeedAdapter extends BaseAdapter implements RearrangementListener{

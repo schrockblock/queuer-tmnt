@@ -4,20 +4,18 @@ package com.tmnt.queuer.activities;
  * Created by billzito on 1/18/14.
  */
     import android.content.Intent;
-    import android.os.Bundle;
-    import android.support.v7.app.ActionBarActivity;
-    import android.util.Log;
-    import android.view.View;
-    import android.widget.AdapterView;
-    import android.widget.ListView;
-    import android.widget.Toast;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.TextView;
 
-    import com.tmnt.queuer.R;
-    import com.tmnt.queuer.adapters.FeedAdapter;
-    import com.tmnt.queuer.models.Project;
-    import com.tmnt.queuer.views.EnhancedListView;
+import com.tmnt.queuer.R;
+import com.tmnt.queuer.adapters.FeedAdapter;
+import com.tmnt.queuer.models.Project;
+import com.tmnt.queuer.views.EnhancedListView;
 
-    import java.util.ArrayList;
+import java.util.ArrayList;
 
 
     public class FeedActivity extends ActionBarActivity {
@@ -29,8 +27,14 @@ package com.tmnt.queuer.activities;
             setContentView(R.layout.activity_feed);
 
             ArrayList<Project> projects = new ArrayList<Project>(20);
-            for (int i = 0; i < 20; i++){
+            /**for (int i = 0; i < 20; i++){
                 projects.add(new Project(i, "Project " + i));
+            }*/
+            TextView no_projects = (TextView)findViewById(R.id.lv_no_project);
+            no_projects.setVisibility(View.INVISIBLE);
+
+            if (projects.isEmpty()) {
+                no_projects.setVisibility(View.VISIBLE);
             }
 
             EnhancedListView listView = (EnhancedListView)findViewById(R.id.lv_projects);
