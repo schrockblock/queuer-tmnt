@@ -41,13 +41,13 @@ public class CreateAccountActivity extends ActionBarActivity {
             public void onClick(View v) {
                 // Do Volley request to create new account
                 startedRequest();
-                LoginManager loginManager = new LoginManager();
+                /**LoginManager loginManager = new LoginManager();
                 loginManager.setCallback(CreateAccountActivity.this, CreateAccountActivity.class);
                 try{
                     loginManager.login(username.getText().toString(), password.getText().toString());
                 }catch (Exception e){
                     e.printStackTrace();
-                }
+                }*/
             }
 
         });
