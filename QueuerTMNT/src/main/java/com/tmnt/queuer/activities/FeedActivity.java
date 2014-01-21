@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
     public class FeedActivity extends ActionBarActivity {
         private FeedAdapter adapter;
+        private TextView no_projects;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ import java.util.ArrayList;
             setContentView(R.layout.activity_feed);
 
             ArrayList<Project> projects = new ArrayList<Project>(20);
-            for (int i = 0; i < 20; i++){
+            for (int i = 0; i < 2; i++){
                 projects.add(new Project(i, "Project " + i));
             }
 
@@ -45,7 +46,7 @@ import java.util.ArrayList;
             }
 
 
-            TextView no_projects = (TextView)findViewById(R.id.lv_no_project);
+            no_projects = (TextView)findViewById(R.id.lv_no_project);
             no_projects.setVisibility(View.INVISIBLE);
 
             if (projects.isEmpty()) {
@@ -86,6 +87,10 @@ import java.util.ArrayList;
 
             listView.enableSwipeToDismiss();
             listView.enableRearranging();
+        }
+
+        public void show_empty_project(){
+            no_projects.setVisibility(View.VISIBLE);
         }
 
     }

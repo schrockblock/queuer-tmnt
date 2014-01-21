@@ -13,7 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.tmnt.queuer.R;
-import com.tmnt.queuer.interfaces.RearrangementListener;
+        import com.tmnt.queuer.activities.FeedActivity;
+        import com.tmnt.queuer.interfaces.RearrangementListener;
 import com.tmnt.queuer.models.Project;
 
 import java.util.ArrayList;
@@ -29,7 +30,10 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
     }
 
     public void remove(int position) {
-        projects.remove(position);
+        Project oldProject = projects.remove(position);
+        if (projects.isEmpty()) {
+            ((FeedActivity)context).show_empty_project();
+        }
         notifyDataSetChanged();
     }
 
