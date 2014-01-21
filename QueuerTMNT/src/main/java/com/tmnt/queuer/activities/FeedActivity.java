@@ -93,5 +93,9 @@ import java.util.ArrayList;
             no_projects.setVisibility(View.VISIBLE);
         }
 
+        public void hide_empty_project(){
+            no_projects.setVisibility(View.INVISIBLE);
+        }
+
     }
 

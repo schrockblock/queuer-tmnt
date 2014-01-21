@@ -28,19 +28,18 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
         Button createAccount = (Button)findViewById(R.id.btn_createAccount);
         final EditText user = (EditText)findViewById(R.id.et_username);
         final EditText pass = (EditText)findViewById(R.id.et_password);
-        pass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, LoginLoad.class);
+                System.out.println("Started onclick manager");
                 LoginManager manager = new LoginManager();
-                //manager.setCallback(LoginActivity.this);
+                manager.setCallback(LoginActivity.this, LoginActivity.this);
                 try {
                     manager.login(user.getText().toString(), pass.getText().toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+            Intent intent = new Intent(LoginActivity.this, LoginLoad.class);
             startActivity(intent);
             }
 

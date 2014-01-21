@@ -12,6 +12,7 @@ package com.tmnt.queuer.activities;
         import android.widget.AdapterView;
         import android.widget.Button;
         import android.widget.EditText;
+        import android.widget.TextView;
 
         import com.tmnt.queuer.R;
         import com.tmnt.queuer.adapters.FeedAdapter;
@@ -28,6 +29,7 @@ package com.tmnt.queuer.activities;
         private int project_id;
         private ArrayList<Task> tasks = new ArrayList<Task>();
         private ProjectAdapter adapter;
+        private TextView no_tasks;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,13 @@ package com.tmnt.queuer.activities;
 
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("Project " + project_id);
+
+            no_tasks = (TextView)findViewById(R.id.lv_no_tasks);
+            no_tasks.setVisibility(View.INVISIBLE);
+
+            if (tasks.isEmpty()) {
+                no_tasks.setVisibility(View.VISIBLE);
+            }
 
             EnhancedListView listView = (EnhancedListView)findViewById(R.id.lv_tasks);
             adapter = new ProjectAdapter(this, tasks);
@@ -97,7 +106,7 @@ package com.tmnt.queuer.activities;
                                         Task task = new Task();
                                         task.setName(taskTitle.getText().toString());
                                         task.setProject_id(project_id);
-                                        tasks.add(0, task);
+                                        adapter.insert(task, 0);
                                         adapter.notifyDataSetChanged();
                                     }
                                 })
@@ -109,6 +118,10 @@ package com.tmnt.queuer.activities;
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+
+        public void hide_empty_tasks(){
+            no_tasks.setVisibility(View.INVISIBLE);
         }
     }
 

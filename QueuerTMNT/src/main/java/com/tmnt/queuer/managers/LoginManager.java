@@ -1,5 +1,6 @@
 package com.tmnt.queuer.managers;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -7,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.tmnt.queuer.QueuerApplication;
 import com.tmnt.queuer.interfaces.LoginManagerCallback;
 import com.tmnt.queuer.models.SignInModel;
 
@@ -18,9 +20,11 @@ import org.json.JSONObject;
  */
 public class LoginManager {
     private LoginManagerCallback callback;
+    private Context context;
 
-    public void setCallback(LoginManagerCallback callback) {
+    public void setCallback(Context context, LoginManagerCallback callback) {
         this.callback = callback;
+        this.context = context;
     }
 
     public void login(String username, String password) throws Exception{
@@ -43,18 +47,19 @@ public class LoginManager {
                 @Override
                 public void onResponse(JSONObject response) {
                     // handle response (are there errors?)
-
+                    System.out.println("Testingresponse" + response.toString().toUpperCase());
                     Log.d("TESTINGRESPONSE", response.toString().toUpperCase());
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     // deal with it
-
+                    System.out.println("Testingresponse" + error.toString().toUpperCase());
                     Log.d("TESTINGRESPONSE", error.toString().toUpperCase());
 
                 }
             });
+            ((QueuerApplication)context.getApplicationContext()).getRequestQueue().add(request);
         }
 
     private void authenticatedSuccessfully()throws Exception{

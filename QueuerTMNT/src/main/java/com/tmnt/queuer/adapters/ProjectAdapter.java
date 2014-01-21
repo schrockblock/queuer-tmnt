@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.tmnt.queuer.R;
 import com.tmnt.queuer.activities.FeedActivity;
+import com.tmnt.queuer.activities.ProjectActivity;
 import com.tmnt.queuer.interfaces.RearrangementListener;
 import com.tmnt.queuer.models.Task;
 
@@ -38,8 +39,11 @@ public class ProjectAdapter extends BaseAdapter implements RearrangementListener
         }
     }
 
-    public void insert(Task Task, int position){
-        tasks.add(position, Task);
+    public void insert(Task task, int position){
+        tasks.add(position, task);
+        if (!tasks.isEmpty()){
+            ((ProjectActivity)context).hide_empty_tasks();
+        }
         notifyDataSetChanged();
     }
 
