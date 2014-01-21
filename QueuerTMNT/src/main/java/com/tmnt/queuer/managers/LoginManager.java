@@ -1,6 +1,5 @@
 package com.tmnt.queuer.managers;
 
-import android.support.v7.appcompat.R;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -44,6 +43,7 @@ public class LoginManager {
                 @Override
                 public void onResponse(JSONObject response) {
                     // handle response (are there errors?)
+
                     Log.d("TESTINGRESPONSE", response.toString().toUpperCase());
                 }
             }, new Response.ErrorListener() {
@@ -60,6 +60,7 @@ public class LoginManager {
     private void authenticatedSuccessfully()throws Exception{
         if (callback == null) throw new Exception("Must supply a LoginManagerCallback");
         callback.finishedRequest(true);
+     //   return true;
     }
 
     private void authenticatedUnsuccessfully() throws Exception{

@@ -58,7 +58,7 @@ import java.util.ArrayList;
 
 
 
-            listView.getViewForID(213).setVisibility(View.GONE);
+            //listView.getViewForID(213).setVisibility(View.GONE);
 
 
             listView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
