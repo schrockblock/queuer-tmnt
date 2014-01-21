@@ -39,8 +39,8 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            Intent intent = new Intent(LoginActivity.this, LoginLoad.class);
-            startActivity(intent);
+            //Intent intent = new Intent(LoginActivity.this, LoginLoad.class);
+            //startActivity(intent);
             }
 
         });
@@ -84,7 +84,10 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
 
     @Override
     public void finishedRequest(boolean successful) {
-
+        if (successful){
+            Intent go_to_feed = new Intent(LoginActivity.this, LoginLoad.class);
+            startActivity(go_to_feed);
+        }
     }
 
     /**

@@ -46,6 +46,13 @@ public class LoginManager {
                     signInJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    try{
+                        authenticatedSuccessfully(callback, true);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+
+
                     // handle response (are there errors?)
                     System.out.println("Testingresponse" + response.toString().toUpperCase());
                     Log.d("TESTINGRESPONSE", response.toString().toUpperCase());
@@ -62,13 +69,13 @@ public class LoginManager {
             ((QueuerApplication)context.getApplicationContext()).getRequestQueue().add(request);
         }
 
-    private void authenticatedSuccessfully()throws Exception{
+    private void authenticatedSuccessfully(LoginManagerCallback callback, boolean successful)throws Exception{
         if (callback == null) throw new Exception("Must supply a LoginManagerCallback");
         callback.finishedRequest(true);
      //   return true;
     }
 
-    private void authenticatedUnsuccessfully() throws Exception{
+    private void authenticatedUnsuccessfully(LoginManagerCallback callback, boolean unsuccessful) throws Exception{
         if (callback == null) throw new Exception("Must supply a LoginManagerCallback");
         callback.finishedRequest(false);
     }
