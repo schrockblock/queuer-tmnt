@@ -91,6 +91,7 @@ package com.tmnt.queuer.activities;
                         //.setMessage(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)))
                         .setCancelable(true)
                         .setView(layout)
+
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {

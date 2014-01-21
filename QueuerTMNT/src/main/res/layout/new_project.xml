@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <View
+        android:id="@+id/color_swatch"
+        android:background="@color/goldenrod"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        />
+    <EditText
+        android:id="@+id/projectName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/color_swatch"
+        android:ems="10"
+        android:hint="Project Name" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/btn_red"
+        android:background="@color/red"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/projectName"
+        />
+
+    <Button
+        android:id="@+id/btn_blue"
+        android:background="@color/blue"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:paddingBottom="10dp"
+        android:layout_toRightOf="@id/btn_red"
+        android:layout_below="@id/projectName"
+        />
+
+    <Button
+        android:id="@+id/btn_green"
+        android:background="@color/green"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btn_blue"
+        android:layout_below="@id/projectName"
+        />
+
+    <Button
+        android:id="@+id/btn_yellow"
+        android:background="@color/yellow"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btn_green"
+        android:layout_below="@id/projectName"
+        />
+
+    <Button
+        android:id="@+id/btn_plum"
+        android:background="@color/plum"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btn_yellow"
+        android:layout_below="@id/projectName"
+        />
+
+    <Button
+        android:id="@+id/btn_orange"
+        android:background="@color/orange"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btn_plum"
+        android:layout_below="@id/projectName"
+        />
+
+    <Button
+        android:id="@+id/btn_turquoise"
+        android:background="@color/turquoise"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btn_orange"
+        android:layout_below="@id/projectName"
+        />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/btn_red"
+        />
+</RelativeLayout>
