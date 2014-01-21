@@ -1,6 +1,7 @@
 package com.tmnt.queuer.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.tmnt.queuer.R;
+import com.tmnt.queuer.activities.FeedActivity;
+import com.tmnt.queuer.activities.ProjectActivity;
 import com.tmnt.queuer.interfaces.RearrangementListener;
-import com.tmnt.queuer.models.Task;
 import com.tmnt.queuer.models.Task;
 
 import java.util.ArrayList;
@@ -28,12 +30,20 @@ public class ProjectAdapter extends BaseAdapter implements RearrangementListener
     }
 
     public void remove(int position) {
-        tasks.remove(position);
+        Task tempTask = tasks.remove(position);
         notifyDataSetChanged();
+        if (tasks.isEmpty()){
+            Intent goToFeed = new Intent(context, FeedActivity.class);
+            goToFeed.putExtra("Project_Id", tempTask.getProject_id() + "");
+            context.startActivity(goToFeed);
+        }
     }
 
-    public void insert(Task Task, int position){
-        tasks.add(position, Task);
+    public void insert(Task task, int position){
+        tasks.add(position, task);
+        if (!tasks.isEmpty()){
+            ((ProjectActivity)context).hide_empty_tasks();
+        }
         notifyDataSetChanged();
     }
 
