@@ -38,7 +38,7 @@ import java.util.ArrayList;
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_feed);
 
-            ArrayList<Project> projects = new ArrayList<Project>(20);
+            projects = new ArrayList<Project>(20);
             for (int i = 0; i < 2; i++){
                 projects.add(new Project(i, "Project " + i));
             }
