@@ -1,7 +1,7 @@
-package com.tmnt.queuer.Interfaces;
+package com.tmnt.queuer.interfaces;
 
 /**
- * Created by eschrock on 12/26/13.
+ * Created by billzito on 1/18/14.
  */
 public interface RearrangementListener {
     public void onStartedRearranging();
