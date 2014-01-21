@@ -1,9 +1,10 @@
 package com.tmnt.queuer.activities;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.demo.queuer.R;
-import com.demo.queuer.managers.LoginManager;
-import com.demo.queuer.Interfaces.LoginManagerCallback;
+import com.tmnt.queuer.interfaces.LoginManagerCallback;
+import com.tmnt.queuer.R;
+import com.tmnt.queuer.managers.LoginManager;
 
 public class LoginActivity extends ActionBarActivity implements LoginManagerCallback{
 
@@ -24,22 +25,37 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
         setContentView(R.layout.activity_login);
 
         Button login = (Button)findViewById(R.id.btn_login);
+        Button createAccount = (Button)findViewById(R.id.btn_createAccount);
         final EditText user = (EditText)findViewById(R.id.et_username);
         final EditText pass = (EditText)findViewById(R.id.et_password);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("Started onclick manager");
                 LoginManager manager = new LoginManager();
-                //manager.setCallback(LoginActivity.this);
+                manager.setCallback(LoginActivity.this, LoginActivity.this);
                 try {
                     manager.login(user.getText().toString(), pass.getText().toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            //Intent intent = new Intent(LoginActivity.this, LoginLoad.class);
+            //startActivity(intent);
             }
-        });
-    }
 
+        });
+
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+
+                startActivity(intent);
+            }
+
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,6 +77,19 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void startedRequest() {
+
+    }
+
+    @Override
+    public void finishedRequest(boolean successful) {
+        if (successful){
+            Intent go_to_feed = new Intent(LoginActivity.this, LoginLoad.class);
+            startActivity(go_to_feed);
+        }
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -76,5 +105,6 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
             return rootView;
         }
     }
+
 
 }
