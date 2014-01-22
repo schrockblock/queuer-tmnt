@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.tmnt.queuer.QueuerApplication;
 import com.tmnt.queuer.interfaces.LoginManagerCallback;
@@ -21,13 +22,15 @@ import org.json.JSONObject;
 public class LoginManager {
     private LoginManagerCallback callback;
     private Context context;
+    private String URL;
 
     public void setCallback(Context context, LoginManagerCallback callback) {
         this.callback = callback;
         this.context = context;
     }
 
-    public void login(String username, String password) throws Exception{
+    public void login(String username, String password, String URL) throws Exception{
+        this.URL = URL;
         if (callback == null) throw new Exception("Must supply a LoginManagerCallback");
         callback.startedRequest();
         authenticate(username, password);
@@ -42,40 +45,53 @@ public class LoginManager {
                 e.printStackTrace();
             }
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                    "http://queuer-mdapp.rhcloud.com/api/v1/session",//TODO: put url in strings folder
+                    URL,
                     signInJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try{
-                        authenticatedSuccessfully(callback, true);
+                        Log.d("SuccessfulResponse1", response.toString().toUpperCase());
+                        if (response.has("errors")) {
+                            authenticatedUnsuccessfully(callback);
+                        }else{
+                            authenticatedSuccessfully(callback);
+                        }
+
+
                     }catch(Exception e){
+                        Log.d("SuccessfulResponse2", response.toString().toUpperCase());
                         e.printStackTrace();
                     }
 
 
                     // handle response (are there errors?)
-                    System.out.println("Testingresponse" + response.toString().toUpperCase());
-                    Log.d("TESTINGRESPONSE", response.toString().toUpperCase());
+
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     // deal with it
-                    System.out.println("Testingresponse" + error.toString().toUpperCase());
-                    Log.d("TESTINGRESPONSE", error.toString().toUpperCase());
-
+                    try{
+                        Log.d("ErrorResponse1", error.toString().toUpperCase());
+                        authenticatedUnsuccessfully(callback);
+                    }catch(Exception e){
+                        Log.d("ErrorResponse2", error.toString().toUpperCase());
+                        e.printStackTrace();
+                    }
                 }
             });
-            ((QueuerApplication)context.getApplicationContext()).getRequestQueue().add(request);
+            //((QueuerApplication)context.getApplicationContext()).getRequestQueue().add(request);
+            Volley.newRequestQueue(context.getApplicationContext()).add(request);
+
         }
 
-    private void authenticatedSuccessfully(LoginManagerCallback callback, boolean successful)throws Exception{
+    private void authenticatedSuccessfully(LoginManagerCallback callback)throws Exception{
         if (callback == null) throw new Exception("Must supply a LoginManagerCallback");
         callback.finishedRequest(true);
      //   return true;
     }
 
-    private void authenticatedUnsuccessfully(LoginManagerCallback callback, boolean unsuccessful) throws Exception{
+    private void authenticatedUnsuccessfully(LoginManagerCallback callback) throws Exception{
         if (callback == null) throw new Exception("Must supply a LoginManagerCallback");
         callback.finishedRequest(false);
     }
