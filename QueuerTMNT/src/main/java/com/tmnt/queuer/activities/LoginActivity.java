@@ -12,12 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.tmnt.queuer.Constants;
 import com.tmnt.queuer.interfaces.LoginManagerCallback;
 import com.tmnt.queuer.R;
 import com.tmnt.queuer.managers.LoginManager;
 
 public class LoginActivity extends ActionBarActivity implements LoginManagerCallback{
+
+    private ProgressBar loading_bar;
+    private TextView loading_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +34,21 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
         Button createAccount = (Button)findViewById(R.id.btn_createAccount);
         final EditText user = (EditText)findViewById(R.id.et_username);
         final EditText pass = (EditText)findViewById(R.id.et_password);
+
+        loading_bar = (ProgressBar)findViewById(R.id.li_progressbar);
+        loading_text = (TextView)findViewById(R.id.li_loading);
+        loading_bar.setVisibility(View.INVISIBLE);
+        loading_text.setVisibility(View.INVISIBLE);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("Started onclick manager");
+                LoginActivity.this.startedRequest();
                 LoginManager manager = new LoginManager();
                 manager.setCallback(LoginActivity.this, LoginActivity.this);
                 try {
-                    manager.login(user.getText().toString(), pass.getText().toString());
+                    manager.login(user.getText().toString(), pass.getText().toString(),  Constants.QUEUER_SESSION_URL);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -79,14 +92,19 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
 
     @Override
     public void startedRequest() {
-
+        loading_bar.setVisibility(View.VISIBLE);
+        loading_text.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void finishedRequest(boolean successful) {
+        loading_bar.setVisibility(View.INVISIBLE);
+        loading_text.setVisibility(View.INVISIBLE);
         if (successful){
-            Intent go_to_feed = new Intent(LoginActivity.this, LoginLoad.class);
+            Intent go_to_feed = new Intent(LoginActivity.this, FeedActivity.class);
             startActivity(go_to_feed);
+        }else{
+            //TODO: Add error saying can't log in
         }
     }
 

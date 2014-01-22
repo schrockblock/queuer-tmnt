@@ -5,11 +5,11 @@ package com.tmnt.queuer.models;
  */
 public class SignInModel {
     private String username;
-    private String pass;
+    private String password;
 
     public SignInModel(String username, String password) {
         this.username = username;
-        this.pass = password;
+        this.password = password;
     }
 
     public String getUsername() {
