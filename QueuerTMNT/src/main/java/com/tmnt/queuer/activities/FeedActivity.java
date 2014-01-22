@@ -39,7 +39,7 @@ import java.util.ArrayList;
             setContentView(R.layout.activity_feed);
 
             projects = new ArrayList<Project>(20);
-            for (int i = 0; i < 2; i++){
+            for (int i = 0; i < 5; i++){
                 projects.add(new Project(i, "Project " + i));
             }
 
@@ -71,8 +71,6 @@ import java.util.ArrayList;
 
 
             //listView.getViewForID(213).setVisibility(View.GONE);
-
-
             listView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
                 @Override
                 public EnhancedListView.Undoable onDismiss(EnhancedListView listView, final int position) {
@@ -86,6 +84,7 @@ import java.util.ArrayList;
                     };
                 }
             });
+
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
