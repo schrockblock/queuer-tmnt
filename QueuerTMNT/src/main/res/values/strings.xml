@@ -15,7 +15,8 @@
     <string name="title_activity_login_activity">Login Activity</string>
 
     <string name="action_add_task">Action Add Task</string>
-    <string name="action_add_project">Action Add Project</string>
+    <string name="action_add_project">Add Project</string>
+    <string name="action_edit_project">Edit Project</string>
     <string name="login_URL">http://queuer-mdapp.rhcloud.com/api/v1/session</string>
 
     <string name="undo">Undo</string>

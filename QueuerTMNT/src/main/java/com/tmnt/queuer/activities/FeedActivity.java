@@ -121,6 +121,11 @@ import java.util.ArrayList;
             // as you specify a parent activity in AndroidManifest.xml.
 
             int id = item.getItemId();
+            if (id ==R.id.action_edit_project){
+
+            }
+
+
             if (id == R.id.action_add_project) {
 
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

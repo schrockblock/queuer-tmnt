@@ -5,8 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.tmnt.queuer.activities.LoginActivity" >
 
-    <item android:id="@+id/action_add_project"
-        android:title="@string/action_add_project"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
-</menu>
+            <item android:id="@+id/action_add_project"
+                android:title="@string/action_add_project"
+                android:orderInCategory="100"
+                android:showAsAction="ifRoom"
+                 />
+
+            <item android:id="@+id/action_edit_project"
+                android:title="@string/action_edit_project"
+                android:orderInCategory="100"
+                android:showAsAction="ifRoom"
+                 />
+
+ </menu>
