@@ -17,4 +17,10 @@
                 android:showAsAction="ifRoom"
                  />
 
+            <item android:id="@+id/project_logout"
+                android:title="@string/action_logout"
+                android:orderInCategory="100"
+                android:showAsAction="ifRoom"
+            />
+
  </menu>

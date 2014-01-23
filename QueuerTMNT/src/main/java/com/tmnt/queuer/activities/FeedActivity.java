@@ -17,7 +17,9 @@ package com.tmnt.queuer.activities;
     import android.widget.Button;
     import android.widget.EditText;
     import android.widget.TextView;
+    import android.widget.Toast;
 
+    import com.tmnt.queuer.Constants;
     import com.tmnt.queuer.R;
     import com.tmnt.queuer.adapters.FeedAdapter;
     import com.tmnt.queuer.models.Project;
@@ -121,7 +123,19 @@ import java.util.ArrayList;
             // as you specify a parent activity in AndroidManifest.xml.
 
             int id = item.getItemId();
-            if (id ==R.id.action_edit_project){
+
+            if (id == R.id.project_logout){
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(FeedActivity.this, Constants.QUEUER_LOGOUT, duration);
+                toast.show();
+
+                Intent go_to_login = new Intent(FeedActivity.this, LoginActivity.class);
+                startActivity(go_to_login);
+            }
+
+
+
+            if (id == R.id.action_edit_project){
 
             }
 
