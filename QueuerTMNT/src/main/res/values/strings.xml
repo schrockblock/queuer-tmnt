@@ -18,7 +18,7 @@
     <string name="action_add_project">Add Project</string>
     <string name="action_edit_project">Edit Project</string>
     <string name="login_URL">http://queuer-mdapp.rhcloud.com/api/v1/session</string>
-
+    <string name="action_logout">Logout</string>
     <string name="undo">Undo</string>
     <string name="undo_all">Undo All</string>
     <string name="item_deleted">Item deleted</string>
