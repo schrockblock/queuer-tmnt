@@ -2,6 +2,8 @@ package com.tmnt.queuer.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SyncAdapterType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +56,10 @@ public class ProjectAdapter extends BaseAdapter implements RearrangementListener
 
     @Override
     public Task getItem(int position) {
+        Log.e("positionId: ", tasks.get(position).getId()+"");
+        Log.e("positionName: ", tasks.get(position).getName()+"");
+        Log.e("positionPosition: ", position + "");
+
         return tasks.get(position);
     }
 
