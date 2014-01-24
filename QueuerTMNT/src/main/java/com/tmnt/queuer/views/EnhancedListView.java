@@ -898,6 +898,7 @@ public class EnhancedListView extends ListView {
         return this;
     }
 
+
     /**
      * Disables the <i>Swipe to Dismiss</i> feature for this list.
      *

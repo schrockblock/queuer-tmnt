@@ -15,11 +15,5 @@
         <requestFocus />
     </EditText>
 
-    <EditText
-        android:id="@+id/task_Position"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:layout_below="@+id/task_Name"
-        android:text="0"/>
+
 </RelativeLayout>

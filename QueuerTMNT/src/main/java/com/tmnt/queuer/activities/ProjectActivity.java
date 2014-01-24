@@ -37,7 +37,9 @@ package com.tmnt.queuer.activities;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_project);
+            View projectView = (View)findViewById(R.layout.activity_project);
+            projectView.setBackgroundColor();
+            setContentView(projectView);
 
             project_id = getIntent().getIntExtra("project_id",-1);
             String project_name = getIntent().getStringExtra("project_name");
@@ -64,6 +66,49 @@ package com.tmnt.queuer.activities;
             EnhancedListView listView = (EnhancedListView)findViewById(R.id.lv_tasks);
             adapter = new ProjectAdapter(this, tasks);
             listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    final Task current_task = adapter.getItem(position);
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProjectActivity.this);
+                        // set title
+                        alertDialogBuilder.setTitle("Edit Task");
+
+
+
+                        final View layout = getLayoutInflater().inflate(R.layout.edit_task, null);
+                        final EditText taskTitle = (EditText)layout.findViewById(R.id.task_Name);
+                        taskTitle.setText(current_task.getName());
+                        final EditText taskOrder = (EditText)layout.findViewById(R.id.task_Position);
+
+
+
+                    // set dialog message
+                        alertDialogBuilder
+                                //.setMessage(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)))
+                                .setCancelable(true)
+                                .setView(layout)
+
+
+                                .setPositiveButton("Ok",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                current_task.setName(taskTitle.getText().toString());
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                    }
+                                });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+
+            });
 
             listView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
                 @Override
@@ -116,7 +161,8 @@ package com.tmnt.queuer.activities;
 
                 View layout = getLayoutInflater().inflate(R.layout.new_task, null);
 
-                final EditText taskTitle = (EditText)layout.findViewById(R.id.task);
+                final EditText taskTitle = (EditText)layout.findViewById(R.id.task_Name);
+                final EditText taskOrder = (EditText)layout.findViewById(R.id.task_Position);
 
                 // set dialog message
                 alertDialogBuilder
@@ -129,10 +175,12 @@ package com.tmnt.queuer.activities;
                                     public void onClick(DialogInterface dialog, int id) {
                                         //TODO: Create actual id that is a positive nonzero integer
                                         Task task = new Task();
+                                        int pos = Integer.parseInt(taskOrder.getText().toString());
                                         task.setId(id);
                                         task.setName(taskTitle.getText().toString());
+                                        task.setOrder(pos);
                                         task.setProject_id(project_id);
-                                        adapter.insert(task, 0);
+                                        adapter.insert(task, pos);
                                         adapter.notifyDataSetChanged();
                                     }
                                 })
