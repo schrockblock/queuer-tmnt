@@ -6,6 +6,7 @@ package com.tmnt.queuer.activities;
         import android.os.Bundle;
         import android.support.v7.app.ActionBar;
         import android.support.v7.app.ActionBarActivity;
+        import android.util.Log;
         import android.view.Menu;
         import android.view.MenuItem;
         import android.view.View;
@@ -39,12 +40,22 @@ package com.tmnt.queuer.activities;
             setContentView(R.layout.activity_project);
 
             project_id = getIntent().getIntExtra("project_id",-1);
+            String project_name = getIntent().getStringExtra("project_name");
 
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setTitle("Project " + project_id);
+            actionBar.setTitle(project_name);
 
             no_tasks = (TextView)findViewById(R.id.lv_no_tasks);
             no_tasks.setVisibility(View.INVISIBLE);
+
+            for (int i = 0; i < 5; i++){
+                Task task = new Task();
+                task.setId(i);
+                task.setName("Name " + i);
+                task.setProject_id(project_id);
+                tasks.add(task);
+            }
+
 
             if (tasks.isEmpty()) {
                 no_tasks.setVisibility(View.VISIBLE);
@@ -116,7 +127,9 @@ package com.tmnt.queuer.activities;
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
+                                        //TODO: Create actual id that is a positive nonzero integer
                                         Task task = new Task();
+                                        task.setId(id);
                                         task.setName(taskTitle.getText().toString());
                                         task.setProject_id(project_id);
                                         adapter.insert(task, 0);

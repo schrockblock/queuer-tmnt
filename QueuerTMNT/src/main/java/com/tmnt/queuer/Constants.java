@@ -13,4 +13,6 @@ public class Constants {
     public final static String QUEUER_SUCCESS_LOGIN = "Successfully logged in";
     public final static String QUEUER_FAIL_LOGIN = "Failed logging in, please try again.";
     public final static String QUEUER_LOGOUT = "You have logged out";
+    public final static String QUEUER_DONE_EDITING = "Done Editing";
 }
+

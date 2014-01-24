@@ -10,6 +10,7 @@ package com.tmnt.queuer.activities;
     import android.graphics.Color;
     import android.os.Bundle;
     import android.support.v7.app.ActionBarActivity;
+    import android.util.Log;
     import android.view.Menu;
     import android.view.MenuItem;
     import android.view.View;
@@ -34,11 +35,18 @@ import java.util.ArrayList;
         private ArrayList<Project> projects;
         private int lastColor;
         private TextView no_projects;
+        private Button done_editing;
+        private MenuItem edit_project_button;
+        private boolean edit_project;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_feed);
+
+            edit_project = false;
+            done_editing = (Button)findViewById(R.id.lv_done_editing);
+            done_editing.setVisibility(View.GONE);
 
             projects = new ArrayList<Project>(20);
             for (int i = 0; i < 5; i++){
@@ -70,6 +78,14 @@ import java.util.ArrayList;
             adapter = new FeedAdapter(this, projects);
             listView.setAdapter(adapter);
 
+            done_editing.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    done_editing.setVisibility(View.GONE);
+                    edit_project_button.setVisible(true);
+                    edit_project = false;
+                }
+            });
 
 
             //listView.getViewForID(213).setVisibility(View.GONE);
@@ -91,9 +107,122 @@ import java.util.ArrayList;
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(FeedActivity.this, ProjectActivity.class);
-                    intent.putExtra("project_id", (int)adapter.getItemId(position));
-                    startActivity(intent);
+
+                    final Project current_project = adapter.getItem(position);
+
+                    if (edit_project){
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FeedActivity.this);
+                        // set title
+                        alertDialogBuilder.setTitle("Edit Project");
+
+                        final View layout = getLayoutInflater().inflate(R.layout.new_project, null);
+
+                        final EditText projectTitle = (EditText)layout.findViewById(R.id.projectName);
+
+                        Button red = (Button)layout.findViewById(R.id.btn_red);
+                        Button blue = (Button)layout.findViewById(R.id.btn_blue);
+                        Button green = (Button)layout.findViewById(R.id.btn_green);
+                        Button yellow = (Button)layout.findViewById(R.id.btn_yellow);
+                        Button plum = (Button)layout.findViewById(R.id.btn_plum);
+                        Button orange = (Button)layout.findViewById(R.id.btn_orange);
+                        Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
+
+                        red.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                lastColor = Color.RED;
+                                layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                            }
+
+                        });
+
+                        blue.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                lastColor = Color.BLUE;
+                                layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                            }
+                        });
+
+                        green.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                lastColor = Color.rgb(0,128,0 );
+                                layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                            }
+                        });
+
+                        yellow.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                lastColor = Color.YELLOW;
+                                layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                            }
+
+                        });
+
+                        plum.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                lastColor = Color.rgb(221,160,221);
+                                layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                            }
+                        });
+
+                        orange.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                lastColor = Color.rgb(255, 165, 0);
+                                layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                            }
+                        });
+
+                        turquoise.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                lastColor = Color.rgb(64, 224, 208);
+                                layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                            }
+                        });
+
+
+                        // set dialog message
+                        alertDialogBuilder
+                                //.setMessage(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)))
+                                .setCancelable(true)
+                                .setView(layout)
+
+
+                                .setPositiveButton("Ok",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                current_project.setColor(lastColor);
+                                                current_project.setTitle(projectTitle.getText().toString());
+                                                edit_project = false;
+                                                edit_project_button.setVisible(true);
+
+                                                int duration = Toast.LENGTH_SHORT;
+                                                Toast toast = Toast.makeText(FeedActivity.this, Constants.QUEUER_DONE_EDITING, duration);
+                                                toast.show();
+                                                done_editing.setVisibility(View.GONE);
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                    }
+                                });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+
+                    }else{
+                        Intent intent = new Intent(FeedActivity.this, ProjectActivity.class);
+                        intent.putExtra("project_id", (int)adapter.getItemId(position));
+                        intent.putExtra("project_name", adapter.getItem(position).getTitle());
+                        startActivity(intent);
+                    }
+
                 }
             });
 
@@ -114,6 +243,7 @@ import java.util.ArrayList;
 
             // Inflate the menu; this adds items to the action bar if it is present.
             getMenuInflater().inflate(R.menu.feed, menu);
+            edit_project_button = menu.findItem(R.id.action_edit_project);
             return true;
         }
 
@@ -136,6 +266,9 @@ import java.util.ArrayList;
 
 
             if (id == R.id.action_edit_project){
+                edit_project = true;
+                done_editing.setVisibility(View.VISIBLE);
+                edit_project_button.setVisible(false);
 
             }
 

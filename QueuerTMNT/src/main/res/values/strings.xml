@@ -25,4 +25,5 @@
     <string name="n_items_deleted">%1$s items deleted</string>
     <string name="no_projects">No Projects Available!</string>
     <string name="no_tasks">No Tasks Available!</string>
+    <string name="done_editing">Done Editing</string>
 </resources>

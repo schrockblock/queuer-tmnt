@@ -53,7 +53,9 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
 
     @Override
     public Project getItem(int position) {
-        Log.e("POSITION", position + "");
+        Log.e("positionId2: ", projects.get(position).getId()+"");
+        Log.e("positionTitle2: ", projects.get(position).getTitle()+"");
+        Log.e("positionPosition2: ", position + "");
         return projects.get(position);
     }
 
