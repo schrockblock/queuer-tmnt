@@ -64,8 +64,8 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
         return getItem(position).getId();
     }
 
-    public long getColor(int color){
-        return getColor(color).;
+    public long getColor(int position){
+        return getItem(position).getColor();
     }
 
     @Override

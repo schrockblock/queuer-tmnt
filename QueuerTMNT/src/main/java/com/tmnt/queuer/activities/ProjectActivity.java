@@ -3,6 +3,7 @@ package com.tmnt.queuer.activities;
         import android.app.AlertDialog;
         import android.content.DialogInterface;
         import android.content.Intent;
+        import android.graphics.Color;
         import android.os.Bundle;
         import android.support.v7.app.ActionBar;
         import android.support.v7.app.ActionBarActivity;
@@ -33,16 +34,19 @@ package com.tmnt.queuer.activities;
         private ArrayList<Task> tasks = new ArrayList<Task>();
         private ProjectAdapter adapter;
         private TextView no_tasks;
+        private int projectColor;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            View projectView = (View)findViewById(R.layout.activity_project);
-            projectView.setBackgroundColor();
-            setContentView(projectView);
 
             project_id = getIntent().getIntExtra("project_id",-1);
             String project_name = getIntent().getStringExtra("project_name");
+            projectColor = getIntent().getIntExtra("project_color", Color.BLUE);
+
+            View projectView = (View)findViewById(R.layout.activity_project);
+            projectView.setBackgroundColor(projectColor);
+            setContentView(projectView);
 
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle(project_name);
