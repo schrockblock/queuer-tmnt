@@ -220,6 +220,7 @@ import java.util.ArrayList;
                         Intent intent = new Intent(FeedActivity.this, ProjectActivity.class);
                         intent.putExtra("project_id", (int)adapter.getItemId(position));
                         intent.putExtra("project_name", adapter.getItem(position).getTitle());
+                        intent.putExtra("project_color", (int)adapter.getColor(position));
                         startActivity(intent);
                     }
 
