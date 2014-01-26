@@ -54,7 +54,7 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
     @Override
     public Project getItem(int position) {
         Log.e("positionId2: ", projects.get(position).getId()+"");
-        Log.e("positionTitle2: ", projects.get(position).getTitle()+"");
+        Log.e("positionTitle2: ", projects.get(position).getName()+"");
         Log.e("positionPosition2: ", position + "");
         return projects.get(position);
     }
@@ -80,7 +80,7 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
             convertView = LayoutInflater.from(context).inflate(R.layout.list_project, null);
         }
 
-        ((TextView)convertView.findViewById(R.id.tv_title)).setText(getItem(position).getTitle());
+        ((TextView)convertView.findViewById(R.id.tv_title)).setText(getItem(position).getName());
         convertView.findViewById(R.id.ll_project).setBackgroundColor(getItem(position).getColor());
 
         return convertView;

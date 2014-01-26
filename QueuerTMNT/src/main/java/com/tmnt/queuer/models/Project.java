@@ -1,17 +1,80 @@
 package com.tmnt.queuer.models;
 
+import android.content.Context;
+
+import com.tmnt.queuer.databases.ProjectDataSource;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Created by billzito on 1/18/14.
  */
 public class Project {
         private int id;
-        private String title;
+        private String name;
         private int color;
+        private int localId;
+        private ArrayList<Task> tasks;
+        private Date created_at;
+        private Date updated_at;
 
-        public Project(int id, String title) {
+
+    public int getLocalId() {
+        return localId;
+    }
+
+    public void setLocalId(int localId) {
+        this.localId = localId;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
+    }
+
+        public Project(Context context, int id, String name) {
             this.id = id;
-            this.title = title;
+            this.name = name;
+            ProjectDataSource projectDataSource = new ProjectDataSource(context);
+            projectDataSource.open();
+            localId = projectDataSource.createProject(name, 0, id, new Date(), new Date()).localId;
+            projectDataSource.close();
         }
+
+        public Project(){
+
+        }
+
+        public static Project syncProject(Project serverProject, Project localProject){
+            //TODO make this not naiive
+            if (serverProject.getUpdated_at().after(localProject.getUpdated_at())){
+                serverProject.setLocalId(localProject.localId);
+                return serverProject;
+            }
+
+            return localProject;
+        }
+
 
         public int getId() {
             return id;
@@ -21,12 +84,12 @@ public class Project {
             this.id = id;
         }
 
-        public String getTitle() {
-            return title;
+        public String getName() {
+            return name;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setName(String name) {
+            this.name = name;
         }
 
         public int getColor() {
