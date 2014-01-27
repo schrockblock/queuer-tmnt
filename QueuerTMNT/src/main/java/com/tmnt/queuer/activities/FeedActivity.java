@@ -409,4 +409,13 @@ package com.tmnt.queuer.activities;
         }
             return super.onOptionsItemSelected(item);
     }
+        public void onResume(){
+            ProjectDataSource projectDataSource = new ProjectDataSource(FeedActivity.this);
+            projectDataSource.open();
+            projects = projectDataSource.getAllProjects();
+
+            projectDataSource.close();
+
+        }
+
  }

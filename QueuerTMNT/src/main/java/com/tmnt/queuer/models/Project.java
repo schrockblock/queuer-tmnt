@@ -3,6 +3,7 @@ package com.tmnt.queuer.models;
 import android.content.Context;
 
 import com.tmnt.queuer.databases.ProjectDataSource;
+import com.tmnt.queuer.databases.TaskDataSource;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -119,4 +120,30 @@ public class Project {
         projectDataSource.updateProject(this);
         projectDataSource.close();
     }
-}
+
+    public String getFeedTitle(){
+        //todo make not ugly if necessary
+
+        if (tasks.isEmpty()){
+            return name;
+        } else{
+
+            return name + " :\n\t" + tasks.get(0).getName();
+        }
+    }
+
+    public void setFeedTitle(){
+    }
+
+    public void dismissFirstTask(Context context){
+        if (!tasks.isEmpty()){
+            TaskDataSource taskDataSource = new TaskDataSource(context);
+            taskDataSource.open();
+            taskDataSource.deleteTask(tasks.remove(0));
+            taskDataSource.close();
+            getFeedTitle();
+        }
+
+        }
+    }
+

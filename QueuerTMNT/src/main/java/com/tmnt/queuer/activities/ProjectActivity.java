@@ -37,13 +37,13 @@ package com.tmnt.queuer.activities;
         private TextView no_tasks;
         private int projectColor;
         private int maxNumber = 1;
-
+        private String project_name;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             project_id = getIntent().getIntExtra("project_id",-1);
-            String project_name = getIntent().getStringExtra("project_name");
+            project_name = getIntent().getStringExtra("project_name");
             projectColor = getIntent().getIntExtra("project_color", Color.BLUE);
 
             TaskDataSource taskDataSource = new TaskDataSource(this);
@@ -214,5 +214,6 @@ package com.tmnt.queuer.activities;
         public void hide_empty_tasks(){
             no_tasks.setVisibility(View.INVISIBLE);
         }
+
     }
 
