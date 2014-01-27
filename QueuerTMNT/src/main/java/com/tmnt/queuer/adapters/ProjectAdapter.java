@@ -36,6 +36,7 @@ public class ProjectAdapter extends BaseAdapter implements RearrangementListener
         Task tempTask = tasks.remove(position);
         tempTask.setFinished(true);
         finishedTasks.add(0, tempTask);
+        tempTask.deleteTask(context);
 
         notifyDataSetChanged();
         if (tasks.isEmpty()){

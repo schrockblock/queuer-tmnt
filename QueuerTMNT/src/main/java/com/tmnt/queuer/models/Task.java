@@ -1,5 +1,9 @@
 package com.tmnt.queuer.models;
 
+import android.content.Context;
+
+import com.tmnt.queuer.databases.TaskDataSource;
+
 import java.sql.Date;
 
 /**
@@ -15,6 +19,19 @@ public class Task {
     private Date created_at;
     private Date updated_at;
 
+    public Task(){
+    }
+
+    public Task(Context context, int project_id, int id, String name) {
+        this.project_id = project_id;
+        this.id = id;
+        this.name = name;
+
+        TaskDataSource taskDataSource = new TaskDataSource(context);
+        taskDataSource.open();
+        this.localId = taskDataSource.createTask(name, project_id, id, order, finished).localId;
+        taskDataSource.close();
+    }
 
     public int getLocalId() {
         return localId;
@@ -78,5 +95,19 @@ public class Task {
 
     public void setProject_id(int project_id) {
         this.project_id = project_id;
+    }
+
+    public void updateTask(Context context){
+        TaskDataSource taskDataSource = new TaskDataSource(context);
+        taskDataSource.open();
+        taskDataSource.updateTask(this);
+        taskDataSource.close();
+    }
+
+    public void deleteTask(Context context){
+        TaskDataSource taskDataSource = new TaskDataSource(context);
+        taskDataSource.open();
+        taskDataSource.deleteTask(this);
+        taskDataSource.close();
     }
 }

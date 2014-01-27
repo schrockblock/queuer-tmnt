@@ -42,10 +42,10 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
 
     public void insert(Project project, int position){
         projects.add(position, project);
+        notifyDataSetChanged();
         if (!projects.isEmpty()) {
             ((FeedActivity)context).hide_empty_project();
         }
-        notifyDataSetChanged();
     }
 
     @Override

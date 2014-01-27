@@ -9,6 +9,7 @@ package com.tmnt.queuer.activities;
     import android.graphics.Color;
     import android.os.Bundle;
     import android.support.v7.app.ActionBarActivity;
+    import android.util.Log;
     import android.view.Menu;
     import android.view.MenuItem;
     import android.view.View;
@@ -53,16 +54,6 @@ package com.tmnt.queuer.activities;
             done_editing.setVisibility(View.GONE);
 
             projects = new ArrayList<Project>(20);
-            //for (int i = 0; i < 5; i++){
-              //  Project pro= new Project(this, maxNumber++, "Project " + i);
-                //pro.setColor(Color.WHITE);
-            //}
-
-            for (Project tempProject: projects ) {
-                if (tempProject.getId() > maxNumber) {
-                    maxNumber = tempProject.getId();
-                }
-            }
 
             ProjectDataSource projectDataSource = new ProjectDataSource(this);
 
@@ -72,6 +63,12 @@ package com.tmnt.queuer.activities;
 
             projectDataSource.close();
 
+            for (Project tempProject: projects ) {
+                if (tempProject.getId() > maxNumber) {
+                    maxNumber = tempProject.getId();
+                }
+            }
+
             Intent previousIntent = getIntent();
             String Project_Id = previousIntent.getStringExtra("Project_Id");
 
@@ -79,6 +76,7 @@ package com.tmnt.queuer.activities;
                 for(Project proj : projects){
                     if (Project_Id.equals("" + proj.getId())){
                         projects.remove(proj);
+                        proj.deleteProject(FeedActivity.this);
                         break;
                     }
                 }
@@ -386,10 +384,14 @@ package com.tmnt.queuer.activities;
                     .setPositiveButton("Ok",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    final Project project = new Project(FeedActivity.this, maxNumber++, projectTitle.getText().toString());
+                                    final Project project = new Project(FeedActivity.this, maxNumber + 1, projectTitle.getText().toString());
+                                    maxNumber++;
                                     project.setName(projectTitle.getText().toString());
                                     project.setColor(lastColor);
                                     projects.add(0, project);
+                                    if (!projects.isEmpty()) {
+                                        hide_empty_project();
+                                    }
                                     adapter.notifyDataSetChanged();
                                     project.updateProject(FeedActivity.this);
                                 }

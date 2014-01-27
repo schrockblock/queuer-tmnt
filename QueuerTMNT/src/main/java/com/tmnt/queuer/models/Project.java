@@ -82,37 +82,36 @@ public class Project {
         this.color = color;
        // new ProjectDataSource(context).updateProject(this);
     }
-        public Project(Context context, int id, String name) {
+
+    public Project(Context context, int id, String name) {
             this.id = id;
             this.name = name;
             ProjectDataSource projectDataSource = new ProjectDataSource(context);
             projectDataSource.open();
             localId = projectDataSource.createProject(name, color, id, new Date(), new Date()).localId;
             projectDataSource.close();
+    }
+
+    public Project(){
+
+    }
+
+    public static Project syncProject(Project serverProject, Project localProject){
+    //TODO make this not naiive
+        if (serverProject.getUpdated_at().after(localProject.getUpdated_at())){
+            serverProject.setLocalId(localProject.localId);
+            return serverProject;
         }
 
-        public Project(){
+        return localProject;
+    }
 
-        }
-
-        public static Project syncProject(Project serverProject, Project localProject){
-            //TODO make this not naiive
-            if (serverProject.getUpdated_at().after(localProject.getUpdated_at())){
-                serverProject.setLocalId(localProject.localId);
-                return serverProject;
-            }
-
-            return localProject;
-        }
-
-
-
-        public void deleteProject(Context context){
-            ProjectDataSource projectDataSource = new ProjectDataSource(context);
-            projectDataSource.open();
-            projectDataSource.deleteProject(this);
-            projectDataSource.close();
-        }
+    public void deleteProject(Context context){
+        ProjectDataSource projectDataSource = new ProjectDataSource(context);
+        projectDataSource.open();
+        projectDataSource.deleteProject(this);
+        projectDataSource.close();
+    }
 
     public void updateProject(Context context){
         ProjectDataSource projectDataSource = new ProjectDataSource(context);
