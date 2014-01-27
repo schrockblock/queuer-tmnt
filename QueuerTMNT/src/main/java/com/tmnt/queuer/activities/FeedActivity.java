@@ -37,6 +37,9 @@ package com.tmnt.queuer.activities;
         private MenuItem edit_project_button;
         private boolean edit_project;
 
+        private int maxNumber = 0;
+
+
         //create a variable that keeps track of the largest project id number
         //Everytime we create a new project, give it project_id = max_number++;
 
@@ -51,7 +54,8 @@ package com.tmnt.queuer.activities;
 
             projects = new ArrayList<Project>(20);
             for (int i = 0; i < 5; i++){
-                new Project(this, i, "Project " + i);
+                Project pro= new Project(this, maxNumber++, "Project " + i);
+                pro.setColor(Color.WHITE);
             }
 
             ProjectDataSource projectDataSource = new ProjectDataSource(this);
@@ -136,7 +140,7 @@ package com.tmnt.queuer.activities;
                         Button plum = (Button)layout.findViewById(R.id.btn_plum);
                         Button orange = (Button)layout.findViewById(R.id.btn_orange);
                         Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
-
+                        lastColor = Color.WHITE;
                         red.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -371,15 +375,14 @@ package com.tmnt.queuer.activities;
                     .setPositiveButton("Ok",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    final Project project = new Project(FeedActivity.this, id, projectTitle.getText().toString());
-                                    project.setId(id);
+                                    final Project project = new Project(FeedActivity.this, maxNumber++, projectTitle.getText().toString());
                                     project.setName(projectTitle.getText().toString());
-
                                     project.setColor(lastColor);
                                     projects.add(0, project);
                                     adapter.notifyDataSetChanged();
                                 }
                             })
+
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }

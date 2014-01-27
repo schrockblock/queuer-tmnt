@@ -44,6 +44,7 @@ package com.tmnt.queuer.activities;
             String project_name = getIntent().getStringExtra("project_name");
             projectColor = getIntent().getIntExtra("project_color", Color.BLUE);
 
+
             setContentView(R.layout.activity_project);
             this.getWindow().getDecorView().setBackgroundColor(projectColor);
 
