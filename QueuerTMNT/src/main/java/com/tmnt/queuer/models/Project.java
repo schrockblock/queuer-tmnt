@@ -34,9 +34,20 @@ public class Project {
         return tasks;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
-        this.tasks = tasks;
-       // new ProjectDataSource(context).updateProject(this);
+    public void setTasks(Context context) {
+        tasks = new ArrayList<Task>();
+        TaskDataSource taskDataSource = new TaskDataSource(context);
+        taskDataSource.open();
+        ArrayList<Task> allTasks = taskDataSource.getAllTasks();
+        for(Task currentTask : allTasks){
+            if (currentTask.getProject_id() == id){
+                tasks.add(currentTask);
+            }
+        }
+
+
+        taskDataSource.close();
+
     }
 
     public Date getCreated_at() {
@@ -91,6 +102,7 @@ public class Project {
             projectDataSource.open();
             localId = projectDataSource.createProject(name, color, id, new Date(), new Date()).localId;
             projectDataSource.close();
+        setTasks(context);
     }
 
     public Project(){
@@ -123,11 +135,9 @@ public class Project {
 
     public String getFeedTitle(){
         //todo make not ugly if necessary
-
         if (tasks.isEmpty()){
             return name;
         } else{
-
             return name + " :\n\t" + tasks.get(0).getName();
         }
     }
@@ -144,6 +154,8 @@ public class Project {
             getFeedTitle();
         }
 
-        }
     }
+
+
+}
 

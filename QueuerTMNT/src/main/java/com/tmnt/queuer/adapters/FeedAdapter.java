@@ -20,7 +20,7 @@ import com.tmnt.queuer.R;
 import com.tmnt.queuer.models.Project;
 
 import java.util.ArrayList;
-//TODO: Crashed when rearranged (due to update project on server)
+
 
 public class FeedAdapter extends BaseAdapter implements RearrangementListener{
     private Context context;
@@ -80,7 +80,7 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
             convertView = LayoutInflater.from(context).inflate(R.layout.list_project, null);
         }
 
-        ((TextView)convertView.findViewById(R.id.tv_title)).setText(getItem(position).getName());
+        ((TextView)convertView.findViewById(R.id.tv_title)).setText(getItem(position).getFeedTitle());
         convertView.findViewById(R.id.ll_project).setBackgroundColor(getItem(position).getColor());
 
         return convertView;

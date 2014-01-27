@@ -64,6 +64,7 @@ package com.tmnt.queuer.activities;
             projectDataSource.close();
 
             for (Project tempProject: projects ) {
+                tempProject.setTasks(FeedActivity.this);
                 if (tempProject.getId() > maxNumber) {
                     maxNumber = tempProject.getId();
                 }
@@ -408,7 +409,7 @@ package com.tmnt.queuer.activities;
             return true;
         }
             return super.onOptionsItemSelected(item);
-    }
+    }/**
         public void onResume(){
             ProjectDataSource projectDataSource = new ProjectDataSource(FeedActivity.this);
             projectDataSource.open();
@@ -416,6 +417,6 @@ package com.tmnt.queuer.activities;
 
             projectDataSource.close();
 
-        }
+        }*/
 
  }
