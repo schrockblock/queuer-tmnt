@@ -26,6 +26,7 @@ public class Project {
 
     public void setLocalId(int localId) {
         this.localId = localId;
+        //new ProjectDataSource(context).updateProject(this);
     }
 
     public ArrayList<Task> getTasks() {
@@ -34,6 +35,7 @@ public class Project {
 
     public void setTasks(ArrayList<Task> tasks) {
         this.tasks = tasks;
+       // new ProjectDataSource(context).updateProject(this);
     }
 
     public Date getCreated_at() {
@@ -42,6 +44,7 @@ public class Project {
 
     public void setCreated_at(Date created_at) {
         this.created_at = created_at;
+      //  new ProjectDataSource(context).updateProject(this);
     }
 
     public Date getUpdated_at() {
@@ -50,14 +53,41 @@ public class Project {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+      //  new ProjectDataSource(context).updateProject(this);
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+        //new ProjectDataSource(context).updateProject(this);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+       // new ProjectDataSource(context).updateProject(this);
+    }
         public Project(Context context, int id, String name) {
             this.id = id;
             this.name = name;
             ProjectDataSource projectDataSource = new ProjectDataSource(context);
             projectDataSource.open();
-            localId = projectDataSource.createProject(name, 0, id, new Date(), new Date()).localId;
+            localId = projectDataSource.createProject(name, color, id, new Date(), new Date()).localId;
             projectDataSource.close();
         }
 
@@ -76,28 +106,18 @@ public class Project {
         }
 
 
-        public int getId() {
-            return id;
+
+        public void deleteProject(Context context){
+            ProjectDataSource projectDataSource = new ProjectDataSource(context);
+            projectDataSource.open();
+            projectDataSource.deleteProject(this);
+            projectDataSource.close();
         }
 
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getColor() {
-            return color;
-        }
-
-        public void setColor(int color) {
-            this.color = color;
-        }
-
+    public void updateProject(Context context){
+        ProjectDataSource projectDataSource = new ProjectDataSource(context);
+        projectDataSource.open();
+        projectDataSource.updateProject(this);
+        projectDataSource.close();
+    }
 }

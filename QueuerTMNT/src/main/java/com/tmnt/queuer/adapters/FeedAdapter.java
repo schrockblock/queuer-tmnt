@@ -15,11 +15,12 @@ import android.widget.TextView;
 
 import com.tmnt.queuer.R;
         import com.tmnt.queuer.activities.FeedActivity;
+        import com.tmnt.queuer.databases.ProjectDataSource;
         import com.tmnt.queuer.interfaces.RearrangementListener;
 import com.tmnt.queuer.models.Project;
 
 import java.util.ArrayList;
-
+//TODO: Crashed when rearranged (due to update project on server)
 
 public class FeedAdapter extends BaseAdapter implements RearrangementListener{
     private Context context;
@@ -35,6 +36,7 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
         if (projects.isEmpty()) {
             ((FeedActivity)context).show_empty_project();
         }
+        oldProject.deleteProject(context);
         notifyDataSetChanged();
     }
 
@@ -53,9 +55,7 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
 
     @Override
     public Project getItem(int position) {
-        Log.e("positionId2: ", projects.get(position).getId()+"");
-        Log.e("positionTitle2: ", projects.get(position).getName()+"");
-        Log.e("positionPosition2: ", position + "");
+
         return projects.get(position);
     }
 

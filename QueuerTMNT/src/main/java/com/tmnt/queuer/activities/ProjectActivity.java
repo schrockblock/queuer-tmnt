@@ -35,6 +35,7 @@ package com.tmnt.queuer.activities;
         private ProjectAdapter adapter;
         private TextView no_tasks;
         private int projectColor;
+        private int maxNumber = 0;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,12 @@ package com.tmnt.queuer.activities;
                 task.setName("Name " + i);
                 task.setProject_id(project_id);
                 tasks.add(task);
+            }
+
+            for (Task tempTask: tasks ) {
+                if (tempTask.getId() > maxNumber) {
+                    maxNumber = tempTask.getId();
+                }
             }
 
 
@@ -177,10 +184,9 @@ package com.tmnt.queuer.activities;
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        //TODO: Create actual id that is a positive nonzero integer
                                         Task task = new Task();
                                         int pos = Integer.parseInt(taskOrder.getText().toString());
-                                        task.setId(id);
+                                        task.setId(maxNumber++);
                                         task.setName(taskTitle.getText().toString());
                                         task.setOrder(pos);
                                         task.setProject_id(project_id);
