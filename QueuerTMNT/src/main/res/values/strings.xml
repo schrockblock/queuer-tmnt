@@ -25,5 +25,11 @@
     <string name="n_items_deleted">%1$s items deleted</string>
     <string name="no_projects">No Projects Available!</string>
     <string name="no_tasks">No Tasks Available!</string>
-    <string name="done_editing">Done Editing</string>
+
+    <string name ="success_create_account">Successfully created the account</string>
+    <string name ="failed_create_account">Failed creating account, please try again.</string>
+    <string name ="success_login">Successfully logged in</string>
+    <string name ="failed_login">Failed logging in, please try again</string>
+    <string name ="logged_out">You have logged out</string>
+    <string name ="done_editing">Done Editing</string>
 </resources>

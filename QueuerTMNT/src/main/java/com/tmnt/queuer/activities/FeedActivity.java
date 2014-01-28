@@ -224,7 +224,7 @@ package com.tmnt.queuer.activities;
                                                 edit_project_button.setVisible(true);
 
                                                 int duration = Toast.LENGTH_SHORT;
-                                                Toast toast = Toast.makeText(FeedActivity.this, Constants.QUEUER_DONE_EDITING, duration);
+                                                Toast toast = Toast.makeText(FeedActivity.this, R.string.done_editing, duration);
                                                 toast.show();
                                                 done_editing.setVisibility(View.GONE);
                                                 adapter.notifyDataSetChanged();
@@ -279,7 +279,7 @@ package com.tmnt.queuer.activities;
 
             if (id == R.id.project_logout){
                 int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(FeedActivity.this, Constants.QUEUER_LOGOUT, duration);
+                Toast toast = Toast.makeText(FeedActivity.this, R.string.logged_out, duration);
                 toast.show();
 
                 Intent go_to_login = new Intent(FeedActivity.this, LoginActivity.class);

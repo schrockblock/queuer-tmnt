@@ -165,7 +165,7 @@ package com.tmnt.queuer.activities;
 
             if (id == R.id.task_logout){
                 int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(ProjectActivity.this, Constants.QUEUER_LOGOUT, duration);
+                Toast toast = Toast.makeText(ProjectActivity.this, R.string.logged_out, duration);
                 toast.show();
                 Intent go_to_login = new Intent(ProjectActivity.this, LoginActivity.class);
                 startActivity(go_to_login);
