@@ -4,7 +4,6 @@ package com.tmnt.queuer.activities;
  * Created by billzito on 1/18/14.
  */
     import android.app.AlertDialog;
-    import android.app.Dialog;
     import android.content.DialogInterface;
     import android.content.Intent;
     import android.graphics.Color;
@@ -24,10 +23,10 @@ package com.tmnt.queuer.activities;
     import com.tmnt.queuer.R;
     import com.tmnt.queuer.adapters.FeedAdapter;
     import com.tmnt.queuer.models.Project;
-    import com.tmnt.queuer.models.Task;
     import com.tmnt.queuer.views.EnhancedListView;
+    import com.tmnt.queuer.databases.ProjectDataSource;
 
-import java.util.ArrayList;
+    import java.util.ArrayList;
 
 
     public class FeedActivity extends ActionBarActivity {
@@ -39,6 +38,12 @@ import java.util.ArrayList;
         private MenuItem edit_project_button;
         private boolean edit_project;
 
+        private int maxNumber = 0;
+
+
+        //create a variable that keeps track of the largest project id number
+        //Everytime we create a new project, give it project_id = max_number++;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -49,8 +54,20 @@ import java.util.ArrayList;
             done_editing.setVisibility(View.GONE);
 
             projects = new ArrayList<Project>(20);
-            for (int i = 0; i < 5; i++){
-                projects.add(new Project(i, "Project " + i));
+
+            ProjectDataSource projectDataSource = new ProjectDataSource(this);
+
+            projectDataSource.open();
+
+            projects = projectDataSource.getAllProjects();
+
+            projectDataSource.close();
+
+            for (Project tempProject: projects ) {
+                tempProject.setTasks(FeedActivity.this);
+                if (tempProject.getId() > maxNumber) {
+                    maxNumber = tempProject.getId();
+                }
             }
 
             Intent previousIntent = getIntent();
@@ -60,6 +77,7 @@ import java.util.ArrayList;
                 for(Project proj : projects){
                     if (Project_Id.equals("" + proj.getId())){
                         projects.remove(proj);
+                        proj.deleteProject(FeedActivity.this);
                         break;
                     }
                 }
@@ -127,6 +145,8 @@ import java.util.ArrayList;
                         Button plum = (Button)layout.findViewById(R.id.btn_plum);
                         Button orange = (Button)layout.findViewById(R.id.btn_orange);
                         Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
+
+                        lastColor = Color.WHITE;
 
                         red.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -197,8 +217,9 @@ import java.util.ArrayList;
                                 .setPositiveButton("Ok",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
+
                                                 current_project.setColor(lastColor);
-                                                current_project.setTitle(projectTitle.getText().toString());
+                                                current_project.setName(projectTitle.getText().toString());
                                                 edit_project = false;
                                                 edit_project_button.setVisible(true);
 
@@ -207,6 +228,7 @@ import java.util.ArrayList;
                                                 toast.show();
                                                 done_editing.setVisibility(View.GONE);
                                                 adapter.notifyDataSetChanged();
+                                                current_project.updateProject(FeedActivity.this);
                                             }
                                         })
                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -219,7 +241,7 @@ import java.util.ArrayList;
                     }else{
                         Intent intent = new Intent(FeedActivity.this, ProjectActivity.class);
                         intent.putExtra("project_id", (int)adapter.getItemId(position));
-                        intent.putExtra("project_name", adapter.getItem(position).getTitle());
+                        intent.putExtra("project_name", adapter.getItem(position).getName());
                         intent.putExtra("project_color", (int)adapter.getColor(position));
                         startActivity(intent);
                     }
@@ -292,6 +314,8 @@ import java.util.ArrayList;
                 Button orange = (Button)layout.findViewById(R.id.btn_orange);
                 Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
 
+                lastColor = Color.WHITE;
+
                 red.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -361,15 +385,19 @@ import java.util.ArrayList;
                     .setPositiveButton("Ok",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    final Project project = new Project(id, projectTitle.getText().toString());
-                                    project.setId(id);
-                                    project.setTitle(projectTitle.getText().toString());
-
+                                    final Project project = new Project(FeedActivity.this, maxNumber + 1, projectTitle.getText().toString());
+                                    maxNumber++;
+                                    project.setName(projectTitle.getText().toString());
                                     project.setColor(lastColor);
                                     projects.add(0, project);
+                                    if (!projects.isEmpty()) {
+                                        hide_empty_project();
+                                    }
                                     adapter.notifyDataSetChanged();
+                                    project.updateProject(FeedActivity.this);
                                 }
                             })
+
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }
@@ -381,5 +409,14 @@ import java.util.ArrayList;
             return true;
         }
             return super.onOptionsItemSelected(item);
-    }
+    }/**
+        public void onResume(){
+            ProjectDataSource projectDataSource = new ProjectDataSource(FeedActivity.this);
+            projectDataSource.open();
+            projects = projectDataSource.getAllProjects();
+
+            projectDataSource.close();
+
+        }*/
+
  }

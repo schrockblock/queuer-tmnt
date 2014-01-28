@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.tmnt.queuer.R;
         import com.tmnt.queuer.activities.FeedActivity;
+        import com.tmnt.queuer.databases.ProjectDataSource;
         import com.tmnt.queuer.interfaces.RearrangementListener;
 import com.tmnt.queuer.models.Project;
 
@@ -35,15 +36,16 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
         if (projects.isEmpty()) {
             ((FeedActivity)context).show_empty_project();
         }
+        oldProject.deleteProject(context);
         notifyDataSetChanged();
     }
 
     public void insert(Project project, int position){
         projects.add(position, project);
+        notifyDataSetChanged();
         if (!projects.isEmpty()) {
             ((FeedActivity)context).hide_empty_project();
         }
-        notifyDataSetChanged();
     }
 
     @Override
@@ -53,9 +55,7 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
 
     @Override
     public Project getItem(int position) {
-        Log.e("positionId2: ", projects.get(position).getId()+"");
-        Log.e("positionTitle2: ", projects.get(position).getTitle()+"");
-        Log.e("positionPosition2: ", position + "");
+
         return projects.get(position);
     }
 
@@ -80,7 +80,7 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
             convertView = LayoutInflater.from(context).inflate(R.layout.list_project, null);
         }
 
-        ((TextView)convertView.findViewById(R.id.tv_title)).setText(getItem(position).getTitle());
+        ((TextView)convertView.findViewById(R.id.tv_title)).setText(getItem(position).getFeedTitle());
         convertView.findViewById(R.id.ll_project).setBackgroundColor(getItem(position).getColor());
 
         return convertView;

@@ -1,6 +1,8 @@
 package com.tmnt.queuer.activities;
 
 import android.content.Intent;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.CheckBox;
 
 import com.tmnt.queuer.Constants;
 import com.tmnt.queuer.interfaces.LoginManagerCallback;
@@ -35,6 +38,7 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
         Button createAccount = (Button)findViewById(R.id.btn_createAccount);
         final EditText user = (EditText)findViewById(R.id.et_username);
         final EditText pass = (EditText)findViewById(R.id.et_password);
+        final CheckBox remember = (CheckBox)findViewById(R.id.checkbox);
 
         loading_bar = (ProgressBar)findViewById(R.id.li_progressbar);
         loading_text = (TextView)findViewById(R.id.li_loading);
@@ -44,6 +48,16 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (remember.isChecked()){
+
+                    //save user and pass
+                    SharedPreferences preferences = getSharedPreferences("login", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("remember", true);
+                    editor.putString("username", user.getText().toString());
+                    editor.putString("password", pass.getText().toString());
+                    editor.commit();
+                     }
                 System.out.println("Started onclick manager");
                 LoginActivity.this.startedRequest();
                 LoginManager manager = new LoginManager();
@@ -56,8 +70,17 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
             //Intent intent = new Intent(LoginActivity.this, LoginLoad.class);
             //startActivity(intent);
             }
-
         });
+            SharedPreferences preferences = getSharedPreferences("login", MODE_PRIVATE);
+            boolean rr2 = preferences.getBoolean("remember", false);
+
+            if (rr2){
+
+                user.setText(preferences.getString("username", ""));
+                pass.setText(preferences.getString("password", ""));
+                remember.setChecked(true);
+            }
+
 
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
