@@ -525,7 +525,11 @@ public class EnhancedListView extends ListView {
     private void updateNeighborViewsForID(long itemID) {
         int position = getPositionForID(itemID);
         BaseAdapter adapter = ((BaseAdapter)getAdapter());
-        mAboveItemId = adapter.getItemId(position - 1);
+        if (position - 1 < 0){
+            mAboveItemId = adapter.getItemId(0);
+        }else{
+            mAboveItemId = adapter.getItemId(position - 1);
+        }
         mBelowItemId = adapter.getItemId(position + 1);
     }
 

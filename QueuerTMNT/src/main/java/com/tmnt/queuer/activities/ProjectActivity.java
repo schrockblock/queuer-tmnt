@@ -21,6 +21,7 @@ package com.tmnt.queuer.activities;
         import com.tmnt.queuer.R;
         import com.tmnt.queuer.adapters.FeedAdapter;
         import com.tmnt.queuer.adapters.ProjectAdapter;
+        import com.tmnt.queuer.databases.TaskDataSource;
         import com.tmnt.queuer.models.Project;
         import com.tmnt.queuer.models.Task;
         import com.tmnt.queuer.views.EnhancedListView;
@@ -35,16 +36,27 @@ package com.tmnt.queuer.activities;
         private ProjectAdapter adapter;
         private TextView no_tasks;
         private int projectColor;
-        private int maxNumber = 0;
-
+        private int maxNumber = 1;
+        private String project_name;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             project_id = getIntent().getIntExtra("project_id",-1);
-            String project_name = getIntent().getStringExtra("project_name");
+            project_name = getIntent().getStringExtra("project_name");
             projectColor = getIntent().getIntExtra("project_color", Color.BLUE);
 
+            TaskDataSource taskDataSource = new TaskDataSource(this);
+            taskDataSource.open();
+            ArrayList<Task> allTasks = taskDataSource.getAllTasks();
+            for(Task currentTask : allTasks){
+                if (currentTask.getProject_id() == project_id){
+                    tasks.add(currentTask);
+                }
+            }
+
+
+            taskDataSource.close();
 
             setContentView(R.layout.activity_project);
             this.getWindow().getDecorView().setBackgroundColor(projectColor);
@@ -55,13 +67,6 @@ package com.tmnt.queuer.activities;
             no_tasks = (TextView)findViewById(R.id.lv_no_tasks);
             no_tasks.setVisibility(View.INVISIBLE);
 
-            for (int i = 0; i < 5; i++){
-                Task task = new Task();
-                task.setId(i);
-                task.setName("Name " + i);
-                task.setProject_id(project_id);
-                tasks.add(task);
-            }
 
             for (Task tempTask: tasks ) {
                 if (tempTask.getId() > maxNumber) {
@@ -108,7 +113,9 @@ package com.tmnt.queuer.activities;
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
                                                 current_task.setName(taskTitle.getText().toString());
+                                                current_task.updateTask(ProjectActivity.this);
                                                 adapter.notifyDataSetChanged();
+
                                             }
                                         })
                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -184,14 +191,14 @@ package com.tmnt.queuer.activities;
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Task task = new Task();
+                                        Task task = new Task(ProjectActivity.this, project_id, maxNumber + 1, taskTitle.getText().toString());
                                         int pos = Integer.parseInt(taskOrder.getText().toString());
-                                        task.setId(maxNumber++);
-                                        task.setName(taskTitle.getText().toString());
+                                        maxNumber++;
                                         task.setOrder(pos);
-                                        task.setProject_id(project_id);
+                                        task.updateTask(ProjectActivity.this);
                                         adapter.insert(task, pos);
                                         adapter.notifyDataSetChanged();
+
                                     }
                                 })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -207,5 +214,6 @@ package com.tmnt.queuer.activities;
         public void hide_empty_tasks(){
             no_tasks.setVisibility(View.INVISIBLE);
         }
+
     }
 

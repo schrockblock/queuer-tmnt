@@ -108,4 +108,6 @@ public class TaskDataSource {
         task.setFinished(1 == cursor.getInt(cursor.getColumnIndex(TaskOpenHelper.COLUMN_COMPLETED)));
         return task;
     }
+
+
 }
