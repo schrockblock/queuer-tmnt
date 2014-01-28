@@ -1,27 +1,26 @@
 package com.tmnt.queuer.activities;
 
-import android.content.Intent;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.CheckBox;
 
 import com.tmnt.queuer.Constants;
-import com.tmnt.queuer.interfaces.LoginManagerCallback;
 import com.tmnt.queuer.R;
+import com.tmnt.queuer.interfaces.LoginManagerCallback;
 import com.tmnt.queuer.managers.LoginManager;
 
 public class LoginActivity extends ActionBarActivity implements LoginManagerCallback{
@@ -57,7 +56,7 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
                     editor.putString("username", user.getText().toString());
                     editor.putString("password", pass.getText().toString());
                     editor.commit();
-                     }
+                }
                 System.out.println("Started onclick manager");
                 LoginActivity.this.startedRequest();
                 LoginManager manager = new LoginManager();
