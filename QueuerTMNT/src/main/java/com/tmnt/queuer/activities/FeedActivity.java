@@ -36,7 +36,9 @@ package com.tmnt.queuer.activities;
         private Button done_editing;
         private MenuItem edit_project_button;
         private boolean edit_project;
+
         private int maxNumber = 0;
+
 
         //create a variable that keeps track of the largest project id number
         //Everytime we create a new project, give it project_id = max_number++;
@@ -51,9 +53,15 @@ package com.tmnt.queuer.activities;
             done_editing.setVisibility(View.GONE);
 
             projects = new ArrayList<Project>(20);
-            for (int i = 0; i < 5; i++){
-                Project pro = new Project(this, maxNumber++, "Project " + i);
-                pro.setColor(Color.WHITE);
+            //for (int i = 0; i < 5; i++){
+              //  Project pro= new Project(this, maxNumber++, "Project " + i);
+                //pro.setColor(Color.WHITE);
+            //}
+
+            for (Project tempProject: projects ) {
+                if (tempProject.getId() > maxNumber) {
+                    maxNumber = tempProject.getId();
+                }
             }
 
             ProjectDataSource projectDataSource = new ProjectDataSource(this);
@@ -139,6 +147,8 @@ package com.tmnt.queuer.activities;
                         Button orange = (Button)layout.findViewById(R.id.btn_orange);
                         Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
 
+                        lastColor = Color.WHITE;
+
                         red.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -219,6 +229,7 @@ package com.tmnt.queuer.activities;
                                                 toast.show();
                                                 done_editing.setVisibility(View.GONE);
                                                 adapter.notifyDataSetChanged();
+                                                current_project.updateProject(FeedActivity.this);
                                             }
                                         })
                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -304,6 +315,8 @@ package com.tmnt.queuer.activities;
                 Button orange = (Button)layout.findViewById(R.id.btn_orange);
                 Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
 
+                lastColor = Color.WHITE;
+
                 red.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -375,12 +388,13 @@ package com.tmnt.queuer.activities;
                                 public void onClick(DialogInterface dialog, int id) {
                                     final Project project = new Project(FeedActivity.this, maxNumber++, projectTitle.getText().toString());
                                     project.setName(projectTitle.getText().toString());
-
                                     project.setColor(lastColor);
                                     projects.add(0, project);
                                     adapter.notifyDataSetChanged();
+                                    project.updateProject(FeedActivity.this);
                                 }
                             })
+
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                         }

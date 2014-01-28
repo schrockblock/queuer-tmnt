@@ -27,6 +27,7 @@ public class ProjectDataSource {
             ProjectOpenHelper.COLUMN_HIDDEN,
             ProjectOpenHelper.COLUMN_TITLE};
 
+
     public ProjectDataSource(Context context) {
         dbHelper = new ProjectOpenHelper(context);
     }
