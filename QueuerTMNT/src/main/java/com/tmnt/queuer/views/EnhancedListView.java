@@ -530,7 +530,11 @@ public class EnhancedListView extends ListView {
         }else{
             mAboveItemId = adapter.getItemId(position - 1);
         }
-        mBelowItemId = adapter.getItemId(position + 1);
+        try {
+            mBelowItemId = adapter.getItemId(position + 1);
+        }catch (Exception e){
+            mBelowItemId = adapter.getItemId(position);
+        }
     }
 
     /** Retrieves the view in the list corresponding to itemID */

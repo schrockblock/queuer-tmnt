@@ -112,4 +112,5 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
     public void onFinishedRearranging() {
 
     }
+
 }
