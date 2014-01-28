@@ -43,10 +43,10 @@ public class CreateAccountActivity extends ActionBarActivity implements LoginMan
             public void onClick(View v) {
                 // Do Volley request to create new account
                 startedRequest();
-                LoginManager createAccountManager = new LoginManager();
+                LoginManager createAccountManager = LoginManager.getLoginManager();
                 createAccountManager.setCallback(CreateAccountActivity.this, CreateAccountActivity.this);
                 try{
-                    createAccountManager.login(username.getText().toString(), password.getText().toString(), Constants.QUEUER_CREATE_ACCOUNT_URL);
+                    createAccountManager.login(username.getText().toString(), password.getText().toString());
 
                 }catch (Exception e){
                     e.printStackTrace();
