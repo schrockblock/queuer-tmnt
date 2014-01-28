@@ -96,6 +96,14 @@ package com.tmnt.queuer.activities;
 
 
             if (id == R.id.action_add_project) {
+            addProjectSelected();
+            }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+        private void addProjectSelected(){
 
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             // set title
@@ -105,73 +113,73 @@ package com.tmnt.queuer.activities;
 
             final EditText projectTitle = (EditText)layout.findViewById(R.id.projectName);
 
-                Button red = (Button)layout.findViewById(R.id.btn_red);
-                Button blue = (Button)layout.findViewById(R.id.btn_blue);
-                Button green = (Button)layout.findViewById(R.id.btn_green);
-                Button yellow = (Button)layout.findViewById(R.id.btn_yellow);
-                Button plum = (Button)layout.findViewById(R.id.btn_plum);
-                Button orange = (Button)layout.findViewById(R.id.btn_orange);
-                Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
+            Button red = (Button)layout.findViewById(R.id.btn_red);
+            Button blue = (Button)layout.findViewById(R.id.btn_blue);
+            Button green = (Button)layout.findViewById(R.id.btn_green);
+            Button yellow = (Button)layout.findViewById(R.id.btn_yellow);
+            Button plum = (Button)layout.findViewById(R.id.btn_plum);
+            Button orange = (Button)layout.findViewById(R.id.btn_orange);
+            Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
 
-                lastColor = Color.WHITE;
+            lastColor = Color.WHITE;
 
-                red.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        lastColor = Color.RED;
-                        layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                    }
+            red.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.RED;
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
 
-                });
+            });
 
-                blue.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        lastColor = Color.BLUE;
-                        layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                    }
-                });
+            blue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.BLUE;
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
 
-                green.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        lastColor = Color.rgb(0,128,0 );
-                        layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                    }
-                });
+            green.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(0,128,0 );
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
 
-                yellow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        lastColor = Color.YELLOW;
-                        layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                    }
+            yellow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.YELLOW;
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
 
-                });
+            });
 
-                plum.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        lastColor = Color.rgb(221,160,221);
-                        layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                    }
-                });
+            plum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(221,160,221);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
 
-                orange.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        lastColor = Color.rgb(255, 165, 0);
-                        layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                    }
-                });
+            orange.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(255, 165, 0);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
 
-                turquoise.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        lastColor = Color.rgb(64, 224, 208);
-                        layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                    }
-                });
+            turquoise.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(64, 224, 208);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
 
 
             // set dialog message
@@ -205,12 +213,10 @@ package com.tmnt.queuer.activities;
 
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
-            return true;
         }
-        return super.onOptionsItemSelected(item);
-    }
 
-    @Override
+
+        @Override
     public void onResume(){
         super.onResume();
         edit_project = false;
@@ -304,118 +310,8 @@ package com.tmnt.queuer.activities;
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                final Project current_project = adapter.getItem(position);
-
                 if (edit_project){
-
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FeedActivity.this);
-                    // set title
-                    alertDialogBuilder.setTitle("Edit Project");
-
-                    final View layout = getLayoutInflater().inflate(R.layout.new_project, null);
-
-                    final EditText projectTitle = (EditText)layout.findViewById(R.id.projectName);
-
-                    Button red = (Button)layout.findViewById(R.id.btn_red);
-                    Button blue = (Button)layout.findViewById(R.id.btn_blue);
-                    Button green = (Button)layout.findViewById(R.id.btn_green);
-                    Button yellow = (Button)layout.findViewById(R.id.btn_yellow);
-                    Button plum = (Button)layout.findViewById(R.id.btn_plum);
-                    Button orange = (Button)layout.findViewById(R.id.btn_orange);
-                    Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
-
-                    lastColor = Color.WHITE;
-
-                    red.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            lastColor = Color.RED;
-                            layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                        }
-
-                    });
-
-                    blue.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            lastColor = Color.BLUE;
-                            layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                        }
-                    });
-
-                    green.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            lastColor = Color.rgb(0,128,0 );
-                            layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                        }
-                    });
-
-                    yellow.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            lastColor = Color.YELLOW;
-                            layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                        }
-
-                    });
-
-                    plum.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            lastColor = Color.rgb(221,160,221);
-                            layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                        }
-                    });
-
-                    orange.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            lastColor = Color.rgb(255, 165, 0);
-                            layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                        }
-                    });
-
-                    turquoise.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            lastColor = Color.rgb(64, 224, 208);
-                            layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
-                        }
-                    });
-
-
-                    // set dialog message
-                    alertDialogBuilder
-                            //.setMessage(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)))
-                            .setCancelable(true)
-                            .setView(layout)
-
-
-                            .setPositiveButton("Ok",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-
-                                            current_project.setColor(lastColor);
-                                            current_project.setName(projectTitle.getText().toString());
-                                            edit_project = false;
-                                            edit_project_button.setVisible(true);
-
-                                            int duration = Toast.LENGTH_SHORT;
-                                            Toast toast = Toast.makeText(FeedActivity.this, R.string.done_editing, duration);
-                                            toast.show();
-                                            done_editing.setVisibility(View.GONE);
-                                            adapter.notifyDataSetChanged();
-                                            current_project.updateProject(FeedActivity.this);
-                                        }
-                                    })
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
-
+                    editProject(position);
                 }else{
                     Intent intent = new Intent(FeedActivity.this, ProjectActivity.class);
                     intent.putExtra("project_id", (int)adapter.getItemId(position));
@@ -430,5 +326,117 @@ package com.tmnt.queuer.activities;
         listView.enableRearranging();
 
     }
+        private void editProject(int pos){
+
+            final Project current_project = adapter.getItem(pos);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(FeedActivity.this);
+            // set title
+            alertDialogBuilder.setTitle("Edit Project");
+
+            final View layout = getLayoutInflater().inflate(R.layout.new_project, null);
+
+            final EditText projectTitle = (EditText)layout.findViewById(R.id.projectName);
+
+            Button red = (Button)layout.findViewById(R.id.btn_red);
+            Button blue = (Button)layout.findViewById(R.id.btn_blue);
+            Button green = (Button)layout.findViewById(R.id.btn_green);
+            Button yellow = (Button)layout.findViewById(R.id.btn_yellow);
+            Button plum = (Button)layout.findViewById(R.id.btn_plum);
+            Button orange = (Button)layout.findViewById(R.id.btn_orange);
+            Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
+
+            lastColor = Color.WHITE;
+
+            red.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.RED;
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+
+            });
+
+            blue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.BLUE;
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
+
+            green.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(0,128,0 );
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
+
+            yellow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.YELLOW;
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+
+            });
+
+            plum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(221,160,221);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
+
+            orange.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(255, 165, 0);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
+
+            turquoise.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(64, 224, 208);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+            });
+
+
+            // set dialog message
+            alertDialogBuilder
+                    //.setMessage(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)))
+                    .setCancelable(true)
+                    .setView(layout)
+
+
+                    .setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    current_project.setColor(lastColor);
+                                    current_project.setName(projectTitle.getText().toString());
+                                    edit_project = false;
+                                    edit_project_button.setVisible(true);
+
+                                    int duration = Toast.LENGTH_SHORT;
+                                    Toast toast = Toast.makeText(FeedActivity.this, R.string.done_editing, duration);
+                                    toast.show();
+                                    done_editing.setVisibility(View.GONE);
+                                    adapter.notifyDataSetChanged();
+                                    current_project.updateProject(FeedActivity.this);
+                                }
+                            })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
 
  }

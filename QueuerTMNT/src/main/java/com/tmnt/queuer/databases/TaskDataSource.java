@@ -68,7 +68,7 @@ public class TaskDataSource {
         values.put(TaskOpenHelper.COLUMN_COMPLETED, complete);
         values.put(TaskOpenHelper.COLUMN_TEXT, task.getName());
 
-        database.update(TaskOpenHelper.TABLE_TASKS, values, TaskOpenHelper.COLUMN_SERVER_ID + " = ?",
+        database.update(TaskOpenHelper.TABLE_TASKS, values, TaskOpenHelper.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(task.getLocalId())});
     }
 

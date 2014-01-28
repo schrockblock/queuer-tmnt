@@ -60,10 +60,10 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
                      }
                 System.out.println("Started onclick manager");
                 LoginActivity.this.startedRequest();
-                LoginManager manager = new LoginManager();
+                LoginManager manager = LoginManager.getLoginManager();
                 manager.setCallback(LoginActivity.this, LoginActivity.this);
                 try {
-                    manager.login(user.getText().toString(), pass.getText().toString(),  Constants.QUEUER_SESSION_URL);
+                    manager.login(user.getText().toString(), pass.getText().toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
