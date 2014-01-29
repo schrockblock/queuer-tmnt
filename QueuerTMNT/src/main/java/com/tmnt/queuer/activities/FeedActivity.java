@@ -3,9 +3,11 @@ package com.tmnt.queuer.activities;
 /**
  * Created by billzito on 1/18/14.
  */
+    import android.app.Activity;
     import android.app.AlertDialog;
     import android.content.DialogInterface;
     import android.content.Intent;
+    import android.content.SharedPreferences;
     import android.graphics.Color;
     import android.os.Bundle;
     import android.support.v7.app.ActionBarActivity;
@@ -19,17 +21,33 @@ package com.tmnt.queuer.activities;
     import android.widget.TextView;
     import android.widget.Toast;
 
+    import com.android.volley.AuthFailureError;
+    import com.android.volley.Request;
+    import com.android.volley.Response;
+    import com.android.volley.VolleyError;
+    import com.android.volley.toolbox.JsonArrayRequest;
+    import com.android.volley.toolbox.JsonObjectRequest;
+    import com.android.volley.toolbox.StringRequest;
+    import com.android.volley.toolbox.Volley;
+    import com.google.gson.Gson;
     import com.tmnt.queuer.Constants;
     import com.tmnt.queuer.R;
     import com.tmnt.queuer.adapters.FeedAdapter;
     import com.tmnt.queuer.models.Project;
+    import com.tmnt.queuer.models.SignInModel;
     import com.tmnt.queuer.views.EnhancedListView;
     import com.tmnt.queuer.databases.ProjectDataSource;
 
+    import org.json.JSONArray;
+    import org.json.JSONException;
+    import org.json.JSONObject;
+
     import java.util.ArrayList;
+    import java.util.HashMap;
+    import java.util.Map;
 
 
-    public class FeedActivity extends ActionBarActivity {
+public class FeedActivity extends ActionBarActivity {
         private FeedAdapter adapter;
         private ArrayList<Project> projects;
         private int lastColor;
@@ -219,19 +237,84 @@ package com.tmnt.queuer.activities;
         @Override
     public void onResume(){
         super.onResume();
-        edit_project = false;
-        done_editing = (Button)findViewById(R.id.lv_done_editing);
-        done_editing.setVisibility(View.GONE);
+            edit_project = false;
+            done_editing = (Button)findViewById(R.id.lv_done_editing);
+            done_editing.setVisibility(View.GONE);
 
-        projects = new ArrayList<Project>(20);
+            projects = new ArrayList<Project>(20);
 
-        ProjectDataSource projectDataSource = new ProjectDataSource(this);
+            ProjectDataSource projectDataSource = new ProjectDataSource(this);
 
-        projectDataSource.open();
+            projectDataSource.open();
 
-        projects = projectDataSource.getAllProjects();
+            projects = projectDataSource.getAllProjects();
 
-        projectDataSource.close();
+            projectDataSource.close();
+
+
+
+            String url = Constants.QUEUER_CREATE_ACCOUNT_URL;
+            SharedPreferences sharedPreferences = getSharedPreferences("login", Activity.MODE_PRIVATE);
+            url += "/";
+            url += sharedPreferences.getString("id", "Default");
+            url += "/projects";
+            Log.e("testingURL", url);
+            Log.e("testingAPIKEY", sharedPreferences.getString("api_key", "Default"));
+            JsonArrayRequest request = new JsonArrayRequest(
+                    url,
+
+                    new Response.Listener<JSONArray>() {
+
+                @Override
+                public void onResponse(JSONArray response) {
+                    Log.d("SuccessfulResponse123", response.toString().toUpperCase());
+                    //response.t
+
+                    for (int i = 0; i < response.length(); i++){
+                        try{
+                            Log.e("printproject", response.getJSONObject(i).toString());
+                            Project tempProject = new Gson().fromJson(response.getJSONObject(i).toString(), Project.class);
+                            //projects.add(tempProject);
+                            //TODO: Compare to local and add to projects and ...
+
+                        }catch (Exception e){
+                            Log.e("testingerror", e.toString());
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(FeedActivity.this, e.toString(), duration);
+                            toast.show();
+                        }
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("testingErrorResponse", "No");
+                    Log.e("testingError", error.toString());
+
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    SharedPreferences sharedPreferences = getSharedPreferences("login", Activity.MODE_PRIVATE);
+                    String api_key = sharedPreferences.getString("api_key", "Default");
+
+                    Map headers = new HashMap();
+                    headers.put("X-Qer-Authorization", api_key);
+                    return headers;
+                }
+            };
+            //((QueuerApplication)context.getApplicationContext()).getRequestQueue().add(request);
+            Volley.newRequestQueue(this.getApplicationContext()).add(request);
+
+
+
+
+
+
+
+
+
 
         for (Project tempProject: projects ) {
             tempProject.setTasks(FeedActivity.this);
