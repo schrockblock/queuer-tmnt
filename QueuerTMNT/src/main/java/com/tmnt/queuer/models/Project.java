@@ -163,11 +163,12 @@ public class Project {
         TaskDataSource taskDataSource = new TaskDataSource(context);
         taskDataSource.open();
         tasks.add(0, tempTask);
+
+        tempTask.setLocalId(taskDataSource.createTask(tempTask.getName(), tempTask.getProject_id(), tempTask.getId(), tempTask.getOrder(), tempTask.isFinished()).getLocalId());
+
         taskDataSource.updateTask(tempTask);
         taskDataSource.close();
         getFeedTitle();
     }
-
-
 }
 

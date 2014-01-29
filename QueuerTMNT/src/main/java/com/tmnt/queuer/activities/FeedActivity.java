@@ -276,13 +276,8 @@ public class FeedActivity extends ActionBarActivity {
                             Project tempProject = gson.fromJson(response.getJSONObject(i).toString(), Project.class );
                             projects.add(tempProject);
                             ArrayList<Task> tempTaskList = tempProject.getTasks();
-                            for (Task tempTask: tempTaskList){
-                                // Create task
-                                Task tempTask2 = new Task(FeedActivity.this, tempTask.getProject_id(), tempTask.getId(), tempTask.getName());
-                            }
 
                             //TODO: Compare to local and add to projects and ...
-
                         }catch (Exception e){
 
                         }
