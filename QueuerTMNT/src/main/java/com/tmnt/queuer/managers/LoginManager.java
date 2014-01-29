@@ -1,6 +1,8 @@
 package com.tmnt.queuer.managers;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -14,6 +16,7 @@ import com.tmnt.queuer.QueuerApplication;
 import com.tmnt.queuer.interfaces.LoginManagerCallback;
 import com.tmnt.queuer.models.SignInModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,6 +76,14 @@ public class LoginManager {
                             authenticatedUnsuccessfully(callback);
                         }else{
                             authenticatedSuccessfully(callback);
+                            String api_key = response.getString("api_key");
+                            String id = response.getString("id");
+                            SharedPreferences preferences = context.getSharedPreferences("login", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("api_key", api_key);
+                            editor.putString("id", id);
+                            editor.commit();
+
                         }
 
 

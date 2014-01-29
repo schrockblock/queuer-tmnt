@@ -1,26 +1,28 @@
 package com.tmnt.queuer.activities;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.CheckBox;
 
 import com.tmnt.queuer.Constants;
-import com.tmnt.queuer.R;
 import com.tmnt.queuer.interfaces.LoginManagerCallback;
+import com.tmnt.queuer.R;
 import com.tmnt.queuer.managers.LoginManager;
 
 public class LoginActivity extends ActionBarActivity implements LoginManagerCallback{
@@ -56,7 +58,7 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
                     editor.putString("username", user.getText().toString());
                     editor.putString("password", pass.getText().toString());
                     editor.commit();
-                }
+                     }
                 System.out.println("Started onclick manager");
                 LoginActivity.this.startedRequest();
                 LoginManager manager = LoginManager.getLoginManager();
@@ -127,6 +129,10 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(LoginActivity.this, R.string.success_login, duration);
             toast.show();
+
+            SharedPreferences preferences = getSharedPreferences("login", Activity.MODE_PRIVATE);
+            Log.e("TestingAPIKEY", preferences.getString("api_key", "Default"));
+
 
             Intent go_to_feed = new Intent(LoginActivity.this, FeedActivity.class);
             startActivity(go_to_feed);
