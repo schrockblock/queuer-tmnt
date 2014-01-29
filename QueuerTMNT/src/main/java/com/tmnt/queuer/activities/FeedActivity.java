@@ -30,11 +30,13 @@ package com.tmnt.queuer.activities;
     import com.android.volley.toolbox.StringRequest;
     import com.android.volley.toolbox.Volley;
     import com.google.gson.Gson;
+    import com.google.gson.GsonBuilder;
     import com.tmnt.queuer.Constants;
     import com.tmnt.queuer.R;
     import com.tmnt.queuer.adapters.FeedAdapter;
     import com.tmnt.queuer.models.Project;
     import com.tmnt.queuer.models.SignInModel;
+    import com.tmnt.queuer.models.Task;
     import com.tmnt.queuer.views.EnhancedListView;
     import com.tmnt.queuer.databases.ProjectDataSource;
 
@@ -258,8 +260,6 @@ public class FeedActivity extends ActionBarActivity {
             url += "/";
             url += sharedPreferences.getString("id", "Default");
             url += "/projects";
-            Log.e("testingURL", url);
-            Log.e("testingAPIKEY", sharedPreferences.getString("api_key", "Default"));
             JsonArrayRequest request = new JsonArrayRequest(
                     url,
 
@@ -272,25 +272,29 @@ public class FeedActivity extends ActionBarActivity {
 
                     for (int i = 0; i < response.length(); i++){
                         try{
-                            Log.e("printproject", response.getJSONObject(i).toString());
-                            Project tempProject = new Gson().fromJson(response.getJSONObject(i).toString(), Project.class);
-                            //projects.add(tempProject);
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
+                            Project tempProject = gson.fromJson(response.getJSONObject(i).toString(), Project.class );
+                            projects.add(tempProject);
+                            ArrayList<Task> tempTaskList = tempProject.getTasks();
+                            for (Task tempTask: tempTaskList){
+                                // Create task
+                                Task tempTask2 = new Task(FeedActivity.this, tempTask.getProject_id(), tempTask.getId(), tempTask.getName());
+                            }
+
                             //TODO: Compare to local and add to projects and ...
 
                         }catch (Exception e){
-                            Log.e("testingerror", e.toString());
-                            int duration = Toast.LENGTH_SHORT;
-                            Toast toast = Toast.makeText(FeedActivity.this, e.toString(), duration);
-                            toast.show();
-                        }
-                    }
 
+                        }
+
+                    }
+                    adapter.notifyDataSetChanged();
+                    checkIfEmpty();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("testingErrorResponse", "No");
-                    Log.e("testingError", error.toString());
+
 
                 }
             }){
@@ -306,14 +310,6 @@ public class FeedActivity extends ActionBarActivity {
             };
             //((QueuerApplication)context.getApplicationContext()).getRequestQueue().add(request);
             Volley.newRequestQueue(this.getApplicationContext()).add(request);
-
-
-
-
-
-
-
-
 
 
         for (Project tempProject: projects ) {
@@ -334,16 +330,10 @@ public class FeedActivity extends ActionBarActivity {
                     break;
                 }
             }
-
         }
 
 
-        no_projects = (TextView)findViewById(R.id.lv_no_project);
-        no_projects.setVisibility(View.INVISIBLE);
-
-        if (projects.isEmpty()) {
-            no_projects.setVisibility(View.VISIBLE);
-        }
+        checkIfEmpty();
 
         EnhancedListView listView = (EnhancedListView)findViewById(R.id.lv_projects);
         adapter = new FeedAdapter(this, projects);
@@ -521,5 +511,14 @@ public class FeedActivity extends ActionBarActivity {
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
+
+    private void checkIfEmpty(){
+        no_projects = (TextView)findViewById(R.id.lv_no_project);
+        no_projects.setVisibility(View.INVISIBLE);
+
+        if (projects.isEmpty()) {
+            no_projects.setVisibility(View.VISIBLE);
+        }
+    }
 
  }
