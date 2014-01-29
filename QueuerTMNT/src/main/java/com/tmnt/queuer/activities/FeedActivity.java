@@ -246,11 +246,8 @@ public class FeedActivity extends ActionBarActivity {
             projects = new ArrayList<Project>(20);
 
             ProjectDataSource projectDataSource = new ProjectDataSource(this);
-
             projectDataSource.open();
-
             projects = projectDataSource.getAllProjects();
-
             projectDataSource.close();
 
 
@@ -267,7 +264,7 @@ public class FeedActivity extends ActionBarActivity {
 
                 @Override
                 public void onResponse(JSONArray response) {
-                    Log.d("SuccessfulResponse123", response.toString().toUpperCase());
+
                     //response.t
 
                     for (int i = 0; i < response.length(); i++){
@@ -368,7 +365,6 @@ public class FeedActivity extends ActionBarActivity {
                             adapter.getItem(position).undoDismissTask(FeedActivity.this, discardedTask);
                         }
                     };
-
                 }
             }
         });

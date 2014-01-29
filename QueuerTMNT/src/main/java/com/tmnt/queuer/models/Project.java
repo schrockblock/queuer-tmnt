@@ -1,12 +1,31 @@
 package com.tmnt.queuer.models;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.tmnt.queuer.Constants;
 import com.tmnt.queuer.databases.ProjectDataSource;
 import com.tmnt.queuer.databases.TaskDataSource;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by billzito on 1/18/14.
@@ -97,13 +116,56 @@ public class Project {
     }
 
     public Project(Context context, int id, String name) {
-            this.id = id;
-            this.name = name;
-            ProjectDataSource projectDataSource = new ProjectDataSource(context);
-            projectDataSource.open();
-            localId = projectDataSource.createProject(name, color, id, new Date(), new Date()).localId;
-            projectDataSource.close();
+        this.id = id;
+        this.name = name;
+        ProjectDataSource projectDataSource = new ProjectDataSource(context);
+        projectDataSource.open();
+        localId = projectDataSource.createProject(name, color, id, new Date(), new Date()).localId;
+        projectDataSource.close();
         setTasks(context);
+
+        JSONObject jsonObject = null;
+        final Context context1 = context;
+        try{
+            jsonObject = new JSONObject(new Gson().toJson(Project.this));
+        } catch (Exception e){
+            Log.e("ErrorPostingNewProject", e.toString());
+        }
+
+        String url = Constants.QUEUER_CREATE_ACCOUNT_URL;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("login", Activity.MODE_PRIVATE);
+        url += "/";
+        url += sharedPreferences.getString("id", "Default");
+        url += "/projects";
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                jsonObject,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                SharedPreferences sharedPreferences = context1.getSharedPreferences("login", Activity.MODE_PRIVATE);
+                String api_key = sharedPreferences.getString("api_key", "Default");
+
+                Map headers = new HashMap();
+                headers.put("X-Qer-Authorization", api_key);
+                return headers;
+            }
+        };
+        Volley.newRequestQueue(context.getApplicationContext()).add(request);
+
+
     }
 
     public Project(){
@@ -121,10 +183,17 @@ public class Project {
     }
 
     public void deleteProject(Context context){
+        
+
+
         ProjectDataSource projectDataSource = new ProjectDataSource(context);
         projectDataSource.open();
         projectDataSource.deleteProject(this);
         projectDataSource.close();
+
+
+
+
     }
 
     public void updateProject(Context context){
