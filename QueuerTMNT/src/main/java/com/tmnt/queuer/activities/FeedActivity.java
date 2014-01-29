@@ -120,6 +120,8 @@ package com.tmnt.queuer.activities;
             Button plum = (Button)layout.findViewById(R.id.btn_plum);
             Button orange = (Button)layout.findViewById(R.id.btn_orange);
             Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
+            Button slategray = (Button)layout.findViewById(R.id.btn_slate_gray);
+            Button goldenrod = (Button)layout.findViewById(R.id.btn_goldenrod);
 
             lastColor = Color.WHITE;
 
@@ -181,6 +183,23 @@ package com.tmnt.queuer.activities;
                 }
             });
 
+            slategray.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(112,128,144);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+
+            });
+
+            goldenrod.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(218,165,32);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+
+            });
 
             // set dialog message
             alertDialogBuilder
@@ -345,6 +364,8 @@ package com.tmnt.queuer.activities;
             Button plum = (Button)layout.findViewById(R.id.btn_plum);
             Button orange = (Button)layout.findViewById(R.id.btn_orange);
             Button turquoise = (Button)layout.findViewById(R.id.btn_turquoise);
+            Button slategray = (Button)layout.findViewById(R.id.btn_slate_gray);
+            Button goldenrod = (Button)layout.findViewById(R.id.btn_goldenrod);
 
             lastColor = Color.WHITE;
 
@@ -404,6 +425,24 @@ package com.tmnt.queuer.activities;
                     lastColor = Color.rgb(64, 224, 208);
                     layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
                 }
+            });
+
+            slategray.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(112,128,144);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+
+            });
+
+            goldenrod.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lastColor = Color.rgb(218,165,32);
+                    layout.findViewById(R.id.color_swatch).setBackgroundColor(lastColor);
+                }
+
             });
 
 

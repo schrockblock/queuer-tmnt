@@ -99,6 +99,26 @@
         android:layout_below="@id/projectName"
         />
 
+    <Button
+        android:id="@+id/btn_slate_gray"
+        android:background="@color/SlateGray"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btn_orange"
+        android:layout_below="@id/projectName"
+        />
+
+    <Button
+        android:id="@+id/btn_goldenrod"
+        android:background="@color/goldenrod"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/btn_orange"
+        android:layout_below="@id/projectName"
+        />
+
     <View
         android:layout_width="1dp"
         android:layout_height="1dp"
