@@ -9,7 +9,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.tmnt.queuer.QueuerApplication;
 import com.tmnt.queuer.interfaces.LoginManagerCallback;
 import com.tmnt.queuer.models.SignInModel;
 
@@ -22,15 +21,15 @@ import org.json.JSONObject;
 public class LoginManager {
     private LoginManagerCallback callback;
     private Context context;
-    private String URL;
+    private String url;
 
     public void setCallback(Context context, LoginManagerCallback callback) {
         this.callback = callback;
         this.context = context;
     }
 
-    public void login(String username, String password, String URL) throws Exception{
-        this.URL = URL;
+    public void login(String username, String password, String url) throws Exception{
+        this.url = url;
         if (callback == null) throw new Exception("Must supply a LoginManagerCallback");
         callback.startedRequest();
         authenticate(username, password);
@@ -45,7 +44,7 @@ public class LoginManager {
                 e.printStackTrace();
             }
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                    URL,
+                    url,
                     signInJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {

@@ -125,7 +125,7 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
         loading_text.setVisibility(View.INVISIBLE);
         if (successful){
             int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(LoginActivity.this, Constants.QUEUER_SUCCESS_LOGIN, duration);
+            Toast toast = Toast.makeText(LoginActivity.this, R.string.success_login, duration);
             toast.show();
 
             Intent go_to_feed = new Intent(LoginActivity.this, FeedActivity.class);
@@ -133,7 +133,7 @@ public class LoginActivity extends ActionBarActivity implements LoginManagerCall
         }else{
             //TODO: Add error saying can't log in
             int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(LoginActivity.this, Constants.QUEUER_FAIL_LOGIN, duration);
+            Toast toast = Toast.makeText(LoginActivity.this, R.string.failed_login, duration);
             toast.show();
 
         }

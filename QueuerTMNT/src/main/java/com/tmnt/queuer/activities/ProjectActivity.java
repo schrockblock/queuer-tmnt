@@ -1,32 +1,27 @@
 package com.tmnt.queuer.activities;
 
         import android.app.AlertDialog;
-        import android.content.DialogInterface;
-        import android.content.Intent;
-        import android.graphics.Color;
-        import android.os.Bundle;
-        import android.support.v7.app.ActionBar;
-        import android.support.v7.app.ActionBarActivity;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.AdapterView;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.tmnt.queuer.Constants;
-        import com.tmnt.queuer.R;
-        import com.tmnt.queuer.adapters.FeedAdapter;
-        import com.tmnt.queuer.adapters.ProjectAdapter;
-        import com.tmnt.queuer.databases.TaskDataSource;
-        import com.tmnt.queuer.models.Project;
-        import com.tmnt.queuer.models.Task;
-        import com.tmnt.queuer.views.EnhancedListView;
+import com.tmnt.queuer.R;
+import com.tmnt.queuer.adapters.ProjectAdapter;
+import com.tmnt.queuer.databases.TaskDataSource;
+import com.tmnt.queuer.models.Task;
+import com.tmnt.queuer.views.EnhancedListView;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 //created by Bill (not really haha)
 
@@ -165,7 +160,7 @@ package com.tmnt.queuer.activities;
 
             if (id == R.id.task_logout){
                 int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(ProjectActivity.this, Constants.QUEUER_LOGOUT, duration);
+                Toast toast = Toast.makeText(ProjectActivity.this, R.string.logged_out, duration);
                 toast.show();
                 Intent go_to_login = new Intent(ProjectActivity.this, LoginActivity.class);
                 startActivity(go_to_login);
@@ -187,7 +182,6 @@ package com.tmnt.queuer.activities;
                         //.setMessage(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)))
                         .setCancelable(true)
                         .setView(layout)
-
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
