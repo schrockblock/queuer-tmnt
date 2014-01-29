@@ -20,7 +20,6 @@ public class Project {
         private Date created_at;
         private Date updated_at;
 
-
     public int getLocalId() {
         return localId;
     }
@@ -33,6 +32,8 @@ public class Project {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
+
+
 
     public void setTasks(Context context) {
         tasks = new ArrayList<Task>();
@@ -145,17 +146,27 @@ public class Project {
     public void setFeedTitle(){
     }
 
-    public void dismissFirstTask(Context context){
+    public Task dismissFirstTask(Context context){
         if (!tasks.isEmpty()){
             TaskDataSource taskDataSource = new TaskDataSource(context);
             taskDataSource.open();
-            taskDataSource.deleteTask(tasks.remove(0));
+            Task tempTask = tasks.remove(0);
+            taskDataSource.deleteTask(tempTask);
             taskDataSource.close();
             getFeedTitle();
+            return tempTask;
         }
+        return null;
     }
 
-
+    public void undoDismissTask(Context context, Task tempTask){
+        TaskDataSource taskDataSource = new TaskDataSource(context);
+        taskDataSource.open();
+        tasks.add(0, tempTask);
+        taskDataSource.updateTask(tempTask);
+        taskDataSource.close();
+        getFeedTitle();
+    }
 
 
 }

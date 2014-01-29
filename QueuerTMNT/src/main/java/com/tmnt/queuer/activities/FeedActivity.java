@@ -365,12 +365,12 @@ public class FeedActivity extends ActionBarActivity {
                     };
                 }
                 else{
-                    project.dismissFirstTask(FeedActivity.this);
+                    final Task discardedTask = project.dismissFirstTask(FeedActivity.this);
                     adapter.notifyDataSetChanged();
                     return new EnhancedListView.Undoable() {
                         @Override
                         public void undo() {
-
+                            adapter.getItem(position).undoDismissTask(FeedActivity.this, discardedTask);
                         }
                     };
 
