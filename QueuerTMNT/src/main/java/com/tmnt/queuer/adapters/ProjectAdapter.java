@@ -2,6 +2,8 @@ package com.tmnt.queuer.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SyncAdapterType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 public class ProjectAdapter extends BaseAdapter implements RearrangementListener {
     private Context context;
     private ArrayList<Task> tasks = new ArrayList<Task>();
+    private ArrayList<Task> finishedTasks = new ArrayList<Task>();
 
     public ProjectAdapter(Context context, ArrayList<Task> tasks) {
         this.context = context;
@@ -31,6 +34,10 @@ public class ProjectAdapter extends BaseAdapter implements RearrangementListener
 
     public void remove(int position) {
         Task tempTask = tasks.remove(position);
+        tempTask.setFinished(true);
+        finishedTasks.add(0, tempTask);
+        tempTask.deleteTask(context);
+
         notifyDataSetChanged();
         if (tasks.isEmpty()){
             Intent goToFeed = new Intent(context, FeedActivity.class);
@@ -54,6 +61,10 @@ public class ProjectAdapter extends BaseAdapter implements RearrangementListener
 
     @Override
     public Task getItem(int position) {
+        Log.e("positionId: ", tasks.get(position).getId()+"");
+        Log.e("positionName: ", tasks.get(position).getName()+"");
+        Log.e("positionPosition: ", position + "");
+
         return tasks.get(position);
     }
 

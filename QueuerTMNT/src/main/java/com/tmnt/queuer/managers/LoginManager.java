@@ -1,6 +1,8 @@
 package com.tmnt.queuer.managers;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -9,10 +11,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.tmnt.queuer.Constants;
 import com.tmnt.queuer.QueuerApplication;
 import com.tmnt.queuer.interfaces.LoginManagerCallback;
 import com.tmnt.queuer.models.SignInModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,20 +26,37 @@ import org.json.JSONObject;
 public class LoginManager {
     private LoginManagerCallback callback;
     private Context context;
-    private String URL;
+    private String url;
+    private static LoginManager loginManager;
+
+    private LoginManager(){}
+
+    public static LoginManager getLoginManager(){
+        if (loginManager == null){
+            loginManager = new LoginManager(); //This only executes if singleton does not exist
+        }
+        return loginManager;
+    }
+
 
     public void setCallback(Context context, LoginManagerCallback callback) {
         this.callback = callback;
         this.context = context;
     }
 
-    public void login(String username, String password, String URL) throws Exception{
-        this.URL = URL;
+    public void login(String username, String password) throws Exception{
+        this.url = Constants.QUEUER_SESSION_URL;
         if (callback == null) throw new Exception("Must supply a LoginManagerCallback");
         callback.startedRequest();
         authenticate(username, password);
     }
 
+    public void createAccount(String username, String password) throws Exception{
+        this.url = Constants.QUEUER_CREATE_ACCOUNT_URL;
+        if (callback == null) throw new Exception("Must supply a LoginManagerCallback");
+        callback.startedRequest();
+        authenticate(username, password);
+    }
         private void authenticate(String username, String password){
             SignInModel model = new SignInModel(username, password);
             JSONObject signInJson = null;
@@ -45,7 +66,7 @@ public class LoginManager {
                 e.printStackTrace();
             }
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                    URL,
+                    url,
                     signInJson, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -55,6 +76,14 @@ public class LoginManager {
                             authenticatedUnsuccessfully(callback);
                         }else{
                             authenticatedSuccessfully(callback);
+                            String api_key = response.getString("api_key");
+                            String id = response.getString("id");
+                            SharedPreferences preferences = context.getSharedPreferences("login", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("api_key", api_key);
+                            editor.putString("id", id);
+                            editor.commit();
+
                         }
 
 

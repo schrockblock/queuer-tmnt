@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.tmnt.queuer.R;
         import com.tmnt.queuer.activities.FeedActivity;
+        import com.tmnt.queuer.databases.ProjectDataSource;
         import com.tmnt.queuer.interfaces.RearrangementListener;
 import com.tmnt.queuer.models.Project;
 
@@ -35,15 +36,16 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
         if (projects.isEmpty()) {
             ((FeedActivity)context).show_empty_project();
         }
+        oldProject.deleteProject(context);
         notifyDataSetChanged();
     }
 
     public void insert(Project project, int position){
         projects.add(position, project);
+        notifyDataSetChanged();
         if (!projects.isEmpty()) {
             ((FeedActivity)context).hide_empty_project();
         }
-        notifyDataSetChanged();
     }
 
     @Override
@@ -53,13 +55,17 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
 
     @Override
     public Project getItem(int position) {
-        Log.e("POSITION", position + "");
+
         return projects.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return getItem(position).getId();
+    }
+
+    public long getColor(int position){
+        return getItem(position).getColor();
     }
 
     @Override
@@ -74,7 +80,7 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
             convertView = LayoutInflater.from(context).inflate(R.layout.list_project, null);
         }
 
-        ((TextView)convertView.findViewById(R.id.tv_title)).setText(getItem(position).getTitle());
+        ((TextView)convertView.findViewById(R.id.tv_title)).setText(getItem(position).getFeedTitle());
         convertView.findViewById(R.id.ll_project).setBackgroundColor(getItem(position).getColor());
 
         return convertView;
@@ -106,4 +112,5 @@ public class FeedAdapter extends BaseAdapter implements RearrangementListener{
     public void onFinishedRearranging() {
 
     }
+
 }

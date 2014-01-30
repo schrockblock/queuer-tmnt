@@ -43,10 +43,10 @@ public class CreateAccountActivity extends ActionBarActivity implements LoginMan
             public void onClick(View v) {
                 // Do Volley request to create new account
                 startedRequest();
-                LoginManager createAccountManager = new LoginManager();
+                LoginManager createAccountManager = LoginManager.getLoginManager();
                 createAccountManager.setCallback(CreateAccountActivity.this, CreateAccountActivity.this);
                 try{
-                    createAccountManager.login(username.getText().toString(), password.getText().toString(), Constants.QUEUER_CREATE_ACCOUNT_URL);
+                    createAccountManager.login(username.getText().toString(), password.getText().toString());
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -69,14 +69,14 @@ public class CreateAccountActivity extends ActionBarActivity implements LoginMan
         loading_progressbar.setVisibility(View.INVISIBLE);
         if (successful){
             int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(CreateAccountActivity.this, Constants.QUEUER_SUCCESS_CREATEACCOUNT, duration);
+            Toast toast = Toast.makeText(CreateAccountActivity.this, R.string.success_create_account, duration);
             toast.show();
 
             Intent go_to_login = new Intent(this, LoginActivity.class);
             startActivity(go_to_login);
         }else{
             int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(CreateAccountActivity.this, Constants.QUEUER_FAIL_CREATEACCOUNT, duration);
+            Toast toast = Toast.makeText(CreateAccountActivity.this, R.string.failed_create_account, duration);
             toast.show();
 
         }

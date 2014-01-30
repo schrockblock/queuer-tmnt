@@ -3,10 +3,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.tmnt.queuer.activities.LoginActivity" >
+    tools:context="com.tmnt.queuer.activities.LoginActivity"
+    android:id="@+id/feed_menu">
 
-    <item android:id="@+id/action_add_project"
-        android:title="@string/action_add_project"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
-</menu>
+
+            <item android:id="@+id/action_add_project"
+                android:title="@string/action_add_project"
+                android:orderInCategory="100"
+                android:showAsAction="ifRoom"
+                 />
+
+            <item android:id="@+id/action_edit_project"
+                android:title="@string/action_edit_project"
+                android:orderInCategory="100"
+                android:showAsAction="ifRoom"
+                 />
+
+            <item android:id="@+id/project_logout"
+                android:title="@string/action_logout"
+                android:orderInCategory="100"
+                android:showAsAction="ifRoom"
+            />
+
+ </menu>

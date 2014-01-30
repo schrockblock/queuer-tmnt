@@ -14,14 +14,22 @@
     <string name="title_activity_login_load">Login Load</string>
     <string name="title_activity_login_activity">Login Activity</string>
 
-    <string name="action_add_task">Action Add Task</string>
-    <string name="action_add_project">Action Add Project</string>
+    <string name="action_add_task">Add Task</string>
+    <string name="action_add_project">Add Project</string>
+    <string name="action_edit_project">Edit Project</string>
     <string name="login_URL">http://queuer-mdapp.rhcloud.com/api/v1/session</string>
-
+    <string name="action_logout">Logout</string>
     <string name="undo">Undo</string>
     <string name="undo_all">Undo All</string>
     <string name="item_deleted">Item deleted</string>
     <string name="n_items_deleted">%1$s items deleted</string>
     <string name="no_projects">No Projects Available!</string>
     <string name="no_tasks">No Tasks Available!</string>
+
+    <string name ="success_create_account">Successfully created the account</string>
+    <string name ="failed_create_account">Failed creating account, please try again.</string>
+    <string name ="success_login">Successfully logged in</string>
+    <string name ="failed_login">Failed logging in, please try again</string>
+    <string name ="logged_out">You have logged out</string>
+    <string name ="done_editing">Done Editing</string>
 </resources>
