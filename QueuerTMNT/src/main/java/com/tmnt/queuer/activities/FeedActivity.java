@@ -3,9 +3,11 @@ package com.tmnt.queuer.activities;
 /**
  * Created by billzito on 1/18/14.
  */
+    import android.app.Activity;
     import android.app.AlertDialog;
     import android.content.DialogInterface;
     import android.content.Intent;
+    import android.content.SharedPreferences;
     import android.graphics.Color;
     import android.os.Bundle;
     import android.support.v7.app.ActionBarActivity;
@@ -19,17 +21,35 @@ package com.tmnt.queuer.activities;
     import android.widget.TextView;
     import android.widget.Toast;
 
+    import com.android.volley.AuthFailureError;
+    import com.android.volley.Request;
+    import com.android.volley.Response;
+    import com.android.volley.VolleyError;
+    import com.android.volley.toolbox.JsonArrayRequest;
+    import com.android.volley.toolbox.JsonObjectRequest;
+    import com.android.volley.toolbox.StringRequest;
+    import com.android.volley.toolbox.Volley;
+    import com.google.gson.Gson;
+    import com.google.gson.GsonBuilder;
     import com.tmnt.queuer.Constants;
     import com.tmnt.queuer.R;
     import com.tmnt.queuer.adapters.FeedAdapter;
     import com.tmnt.queuer.models.Project;
+    import com.tmnt.queuer.models.SignInModel;
+    import com.tmnt.queuer.models.Task;
     import com.tmnt.queuer.views.EnhancedListView;
     import com.tmnt.queuer.databases.ProjectDataSource;
 
+    import org.json.JSONArray;
+    import org.json.JSONException;
+    import org.json.JSONObject;
+
     import java.util.ArrayList;
+    import java.util.HashMap;
+    import java.util.Map;
 
 
-    public class FeedActivity extends ActionBarActivity {
+public class FeedActivity extends ActionBarActivity {
         private FeedAdapter adapter;
         private ArrayList<Project> projects;
         private int lastColor;
@@ -238,19 +258,70 @@ package com.tmnt.queuer.activities;
         @Override
     public void onResume(){
         super.onResume();
-        edit_project = false;
-        done_editing = (Button)findViewById(R.id.lv_done_editing);
-        done_editing.setVisibility(View.GONE);
+            edit_project = false;
+            done_editing = (Button)findViewById(R.id.lv_done_editing);
+            done_editing.setVisibility(View.GONE);
 
-        projects = new ArrayList<Project>(20);
+            projects = new ArrayList<Project>(20);
 
-        ProjectDataSource projectDataSource = new ProjectDataSource(this);
+            ProjectDataSource projectDataSource = new ProjectDataSource(this);
+            projectDataSource.open();
+            projects = projectDataSource.getAllProjects();
+            projectDataSource.close();
 
-        projectDataSource.open();
+        // Gets projects from the server. Works, but we haven't synced with database, so we comment it out
+        /**
+            String url = Constants.QUEUER_CREATE_ACCOUNT_URL;
+            SharedPreferences sharedPreferences = getSharedPreferences("login", Activity.MODE_PRIVATE);
+            url += "/";
+            url += sharedPreferences.getString("id", "Default");
+            url += "/projects";
+            JsonArrayRequest request = new JsonArrayRequest(
+                    url,
 
-        projects = projectDataSource.getAllProjects();
+                    new Response.Listener<JSONArray>() {
 
-        projectDataSource.close();
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    //response.t
+
+                    for (int i = 0; i < response.length(); i++){
+                        try{
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
+                            Project tempProject = gson.fromJson(response.getJSONObject(i).toString(), Project.class );
+                            projects.add(tempProject);
+                            ArrayList<Task> tempTaskList = tempProject.getTasks();
+
+                            //TODO: Compare to local and add to projects and ...
+                        }catch (Exception e){
+
+                        }
+
+                    }
+                    adapter.notifyDataSetChanged();
+                    checkIfEmpty();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    SharedPreferences sharedPreferences = getSharedPreferences("login", Activity.MODE_PRIVATE);
+                    String api_key = sharedPreferences.getString("api_key", "Default");
+
+                    Map headers = new HashMap();
+                    headers.put("X-Qer-Authorization", api_key);
+                    return headers;
+                }
+            };
+            //((QueuerApplication)context.getApplicationContext()).getRequestQueue().add(request);
+            Volley.newRequestQueue(this.getApplicationContext()).add(request);
+*/
 
         for (Project tempProject: projects ) {
             tempProject.setTasks(FeedActivity.this);
@@ -270,16 +341,10 @@ package com.tmnt.queuer.activities;
                     break;
                 }
             }
-
         }
 
 
-        no_projects = (TextView)findViewById(R.id.lv_no_project);
-        no_projects.setVisibility(View.INVISIBLE);
-
-        if (projects.isEmpty()) {
-            no_projects.setVisibility(View.VISIBLE);
-        }
+        checkIfEmpty();
 
         EnhancedListView listView = (EnhancedListView)findViewById(R.id.lv_projects);
         adapter = new FeedAdapter(this, projects);
@@ -311,15 +376,14 @@ package com.tmnt.queuer.activities;
                     };
                 }
                 else{
-                    project.dismissFirstTask(FeedActivity.this);
+                    final Task discardedTask = project.dismissFirstTask(FeedActivity.this);
                     adapter.notifyDataSetChanged();
                     return new EnhancedListView.Undoable() {
                         @Override
                         public void undo() {
-
+                            adapter.getItem(position).undoDismissTask(FeedActivity.this, discardedTask);
                         }
                     };
-
                 }
             }
         });
@@ -477,5 +541,14 @@ package com.tmnt.queuer.activities;
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
+
+    private void checkIfEmpty(){
+        no_projects = (TextView)findViewById(R.id.lv_no_project);
+        no_projects.setVisibility(View.INVISIBLE);
+
+        if (projects.isEmpty()) {
+            no_projects.setVisibility(View.VISIBLE);
+        }
+    }
 
  }
