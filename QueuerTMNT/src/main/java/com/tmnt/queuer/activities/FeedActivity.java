@@ -250,8 +250,8 @@ public class FeedActivity extends ActionBarActivity {
             projects = projectDataSource.getAllProjects();
             projectDataSource.close();
 
-
-
+        // Gets projects from the server. Works, but we haven't synced with database, so we comment it out
+        /**
             String url = Constants.QUEUER_CREATE_ACCOUNT_URL;
             SharedPreferences sharedPreferences = getSharedPreferences("login", Activity.MODE_PRIVATE);
             url += "/";
@@ -302,7 +302,7 @@ public class FeedActivity extends ActionBarActivity {
             };
             //((QueuerApplication)context.getApplicationContext()).getRequestQueue().add(request);
             Volley.newRequestQueue(this.getApplicationContext()).add(request);
-
+*/
 
         for (Project tempProject: projects ) {
             tempProject.setTasks(FeedActivity.this);

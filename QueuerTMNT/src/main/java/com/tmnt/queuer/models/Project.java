@@ -123,7 +123,8 @@ public class Project {
         localId = projectDataSource.createProject(name, color, id, new Date(), new Date()).localId;
         projectDataSource.close();
         setTasks(context);
-
+        // Puts projects in server. Works, but we haven't done the rest so we comment it out
+        /**
         JSONObject jsonObject = null;
         final Context context1 = context;
         try{
@@ -165,7 +166,7 @@ public class Project {
         };
         Volley.newRequestQueue(context.getApplicationContext()).add(request);
 
-
+*/
     }
 
     public Project(){
@@ -183,7 +184,7 @@ public class Project {
     }
 
     public void deleteProject(Context context){
-        
+
 
 
         ProjectDataSource projectDataSource = new ProjectDataSource(context);
